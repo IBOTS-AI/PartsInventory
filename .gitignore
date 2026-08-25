@@ -6,5 +6,10 @@ build/
 *.log
 .DS_Store
 uploads/
+data/
+*.db
+*.db-journal
+*.db-shm
+*.db-wal
 
 /generated/prisma
