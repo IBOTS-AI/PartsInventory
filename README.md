@@ -1,61 +1,87 @@
-# IBOTS Inventory App
+# FRC Parts Inventory
 
-Self-hosted inventory system for FRC Team 2370.
+Self-hosted shop inventory system designed for FRC teams. Team 2370 (the iBots) is the reference installation, but team-specific configuration should remain separate from the core application.
 
 ## Stack
 
-- **Backend**: Node.js, Express, TypeScript, PostgreSQL, Prisma ORM
-- **Frontend**: React (Vite), MUI
-- **Tooling**: ESLint + Prettier in both workspaces, npm workspaces
+- **Backend:** Node.js, Express, TypeScript, Prisma ORM
+- **Database:** SQLite (embedded; no separate database server required)
+- **Frontend:** React (Vite), MUI
+- **Tooling:** ESLint + Prettier, npm workspaces
 
 ## Project structure
 
 ```
-client/   React + Vite + MUI frontend
-server/   Express + TypeScript API
-docker-compose.yml   Local Postgres for development
+client/        React + Vite + MUI frontend
+server/        Express + TypeScript API
+prisma/        Prisma schema, migrations, and development seed
+data/          Local runtime data (database/uploads; not committed)
 ```
 
-## Getting started
+## Development setup
 
-1. Start Postgres locally:
+1. Copy the environment template:
    ```
-   docker compose up -d
+   copy .env.example .env
    ```
-2. Copy environment variables:
-   ```
-   copy .env.example server\.env
-   ```
-3. Install dependencies (from repo root):
+2. Install dependencies:
    ```
    npm install
    ```
-4. Apply the database schema and generate the Prisma client:
+3. Generate the Prisma client and create/apply the SQLite schema:
    ```
-   npx prisma migrate dev
    npx prisma generate
+   npx prisma migrate dev
    ```
-5. Run both client and server in dev mode:
+4. Optional development sample data:
+   ```
+   npx prisma db seed
+   ```
+5. Start the application:
    ```
    npm run dev
    ```
-   - Client: http://localhost:5173
-   - Server: http://localhost:4000 (proxied under `/api` from the client dev server)
 
-## Scripts (from repo root)
+- Client: http://localhost:5173
+- Server: http://localhost:4000 (proxied under `/api` by the client dev server)
+
+No PostgreSQL installation, Docker container, database account, or database port configuration is required.
+
+## Database and application data
+
+SQLite is the standard database for this project. The default development URL is:
+
+```
+DATABASE_URL=file:./data/inventory.db
+```
+
+Production packaging will keep persistent application data separate from installed program files. The application-data area will contain the SQLite database, uploaded images, configuration, and backups so upgrades do not overwrite team inventory.
+
+The schema lives in `prisma/schema.prisma`. Prisma manages schema migrations and client generation.
+
+Part images are stored on the local filesystem rather than inside the SQLite database. `IMAGE_UPLOAD_DIR` defaults to `./data/uploads` for development.
+
+## Distribution goal
+
+The production goal is a guided installer that a mentor with no programming experience can use on a clean computer. Normal installation should not require VS Code, Node/npm commands, Prisma commands, Docker, database administration, or manual configuration-file editing.
+
+Planned production features include:
+
+- guided first-run team setup
+- automatic database creation and migrations
+- persistent application-data directory
+- graphical backup and restore
+- safe upgrades that preserve inventory data
+- Windows-first installer, with additional deployment options evaluated later
+
+## Development scripts
 
 - `npm run dev` — run client + server concurrently
 - `npm run build` — build both workspaces
 - `npm run lint` — lint both workspaces
-- `npm run format` — format both workspaces with Prettier
+- `npm run format` — format both workspaces
+- `npm test` — run server tests
 
-## Database
+## Project specification
 
-The schema lives in [prisma/schema.prisma](prisma/schema.prisma). During development, create and
-apply migrations with `npx prisma migrate dev --name <change_name>`, then run `npx prisma generate`.
-The seed data is in [prisma/seed.ts](prisma/seed.ts) and can be applied with `npx prisma db seed`.
-
-Part images are stored on the local filesystem, not in PostgreSQL. Set `IMAGE_UPLOAD_DIR` to an
-absolute or working-directory-relative folder when deploying on the shop server. The default is
-`./uploads`. Users can upload JPEG/PNG/WebP files or import a public image URL; imported URLs are
-downloaded and stored locally.
+The Google Docs project scope and technical design is the living planning specification. The repository README is intentionally focused on implementation and developer setup.
