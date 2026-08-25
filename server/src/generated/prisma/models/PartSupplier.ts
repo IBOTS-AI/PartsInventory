@@ -556,14 +556,6 @@ export type PartSupplierUncheckedUpdateManyWithoutSupplierNestedInput = {
   deleteMany?: Prisma.PartSupplierScalarWhereInput | Prisma.PartSupplierScalarWhereInput[]
 }
 
-export type NullableDecimalFieldUpdateOperationsInput = {
-  set?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
-}
-
 export type PartSupplierCreateWithoutPartInput = {
   supplierPartNumber?: string | null
   productUrl?: string | null
@@ -592,7 +584,6 @@ export type PartSupplierCreateOrConnectWithoutPartInput = {
 
 export type PartSupplierCreateManyPartInputEnvelope = {
   data: Prisma.PartSupplierCreateManyPartInput | Prisma.PartSupplierCreateManyPartInput[]
-  skipDuplicates?: boolean
 }
 
 export type PartSupplierUpsertWithWhereUniqueWithoutPartInput = {
@@ -654,7 +645,6 @@ export type PartSupplierCreateOrConnectWithoutSupplierInput = {
 
 export type PartSupplierCreateManySupplierInputEnvelope = {
   data: Prisma.PartSupplierCreateManySupplierInput | Prisma.PartSupplierCreateManySupplierInput[]
-  skipDuplicates?: boolean
 }
 
 export type PartSupplierUpsertWithWhereUniqueWithoutSupplierInput = {
@@ -1513,7 +1503,6 @@ export type PartSupplierCreateManyArgs<ExtArgs extends runtime.Types.Extensions.
    * The data used to create many PartSuppliers.
    */
   data: Prisma.PartSupplierCreateManyInput | Prisma.PartSupplierCreateManyInput[]
-  skipDuplicates?: boolean
 }
 
 /**
@@ -1532,7 +1521,6 @@ export type PartSupplierCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Ex
    * The data used to create many PartSuppliers.
    */
   data: Prisma.PartSupplierCreateManyInput | Prisma.PartSupplierCreateManyInput[]
-  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */

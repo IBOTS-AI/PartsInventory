@@ -12,7 +12,13 @@
     "build": "npm run build -w client && npm run build -w server",
     "lint": "npm run lint -w client && npm run lint -w server",
     "format": "npm run format -w client && npm run format -w server",
-    "test": "npm test -w server"
+    "test": "npm test -w server",
+    "db:push": "prisma db push",
+    "db:generate": "prisma generate",
+    "db:seed": "prisma db seed",
+    "db:init": "npm run db:push && npm run db:generate && npm run db:seed",
+    "db:backup": "node scripts/sqlite-backup.mjs",
+    "db:restore": "node scripts/sqlite-restore.mjs"
   },
   "keywords": [],
   "author": "",
@@ -23,9 +29,9 @@
     "tsx": "^4.23.12"
   },
   "dependencies": {
-    "@prisma/adapter-pg": "^7.9.1",
+    "@prisma/adapter-libsql": "^7.9.1",
     "@prisma/client": "^7.9.1",
-    "pg": "^8.23.0"
+    "@libsql/client": "^0.15.15"
   },
   "allowScripts": {
     "@prisma/engines@7.9.1": true,

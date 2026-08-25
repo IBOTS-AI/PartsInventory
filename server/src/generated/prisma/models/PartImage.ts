@@ -528,7 +528,6 @@ export type PartImageCreateOrConnectWithoutPartInput = {
 
 export type PartImageCreateManyPartInputEnvelope = {
   data: Prisma.PartImageCreateManyPartInput | Prisma.PartImageCreateManyPartInput[]
-  skipDuplicates?: boolean
 }
 
 export type PartImageUpsertWithWhereUniqueWithoutPartInput = {
@@ -1351,7 +1350,6 @@ export type PartImageCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Int
    * The data used to create many PartImages.
    */
   data: Prisma.PartImageCreateManyInput | Prisma.PartImageCreateManyInput[]
-  skipDuplicates?: boolean
 }
 
 /**
@@ -1370,7 +1368,6 @@ export type PartImageCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Exten
    * The data used to create many PartImages.
    */
   data: Prisma.PartImageCreateManyInput | Prisma.PartImageCreateManyInput[]
-  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */

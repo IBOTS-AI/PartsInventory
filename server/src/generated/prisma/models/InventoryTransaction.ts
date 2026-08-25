@@ -632,7 +632,6 @@ export type InventoryTransactionCreateOrConnectWithoutLocationInput = {
 
 export type InventoryTransactionCreateManyLocationInputEnvelope = {
   data: Prisma.InventoryTransactionCreateManyLocationInput | Prisma.InventoryTransactionCreateManyLocationInput[]
-  skipDuplicates?: boolean
 }
 
 export type InventoryTransactionCreateWithoutDestinationInput = {
@@ -663,7 +662,6 @@ export type InventoryTransactionCreateOrConnectWithoutDestinationInput = {
 
 export type InventoryTransactionCreateManyDestinationInputEnvelope = {
   data: Prisma.InventoryTransactionCreateManyDestinationInput | Prisma.InventoryTransactionCreateManyDestinationInput[]
-  skipDuplicates?: boolean
 }
 
 export type InventoryTransactionUpsertWithWhereUniqueWithoutLocationInput = {
@@ -741,7 +739,6 @@ export type InventoryTransactionCreateOrConnectWithoutPartInput = {
 
 export type InventoryTransactionCreateManyPartInputEnvelope = {
   data: Prisma.InventoryTransactionCreateManyPartInput | Prisma.InventoryTransactionCreateManyPartInput[]
-  skipDuplicates?: boolean
 }
 
 export type InventoryTransactionUpsertWithWhereUniqueWithoutPartInput = {
@@ -1651,7 +1648,6 @@ export type InventoryTransactionCreateManyArgs<ExtArgs extends runtime.Types.Ext
    * The data used to create many InventoryTransactions.
    */
   data: Prisma.InventoryTransactionCreateManyInput | Prisma.InventoryTransactionCreateManyInput[]
-  skipDuplicates?: boolean
 }
 
 /**
@@ -1670,7 +1666,6 @@ export type InventoryTransactionCreateManyAndReturnArgs<ExtArgs extends runtime.
    * The data used to create many InventoryTransactions.
    */
   data: Prisma.InventoryTransactionCreateManyInput | Prisma.InventoryTransactionCreateManyInput[]
-  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */

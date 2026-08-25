@@ -8,9 +8,10 @@
  *
  * 🟢 You can import this file directly.
  */
-export type * from './models/Category.js'
+export type * from './models/Tag.js'
 export type * from './models/Location.js'
 export type * from './models/Part.js'
+export type * from './models/PartTag.js'
 export type * from './models/Inventory.js'
 export type * from './models/InventoryTransaction.js'
 export type * from './models/PartAlias.js'

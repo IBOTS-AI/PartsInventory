@@ -42,8 +42,8 @@ export type LocationMinAggregateOutputType = {
   code: string | null
   locationType: string | null
   description: string | null
+  color: string | null
   qrCode: string | null
-  active: boolean | null
   parentId: number | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -55,8 +55,8 @@ export type LocationMaxAggregateOutputType = {
   code: string | null
   locationType: string | null
   description: string | null
+  color: string | null
   qrCode: string | null
-  active: boolean | null
   parentId: number | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -68,8 +68,8 @@ export type LocationCountAggregateOutputType = {
   code: number
   locationType: number
   description: number
+  color: number
   qrCode: number
-  active: number
   parentId: number
   createdAt: number
   updatedAt: number
@@ -93,8 +93,8 @@ export type LocationMinAggregateInputType = {
   code?: true
   locationType?: true
   description?: true
+  color?: true
   qrCode?: true
-  active?: true
   parentId?: true
   createdAt?: true
   updatedAt?: true
@@ -106,8 +106,8 @@ export type LocationMaxAggregateInputType = {
   code?: true
   locationType?: true
   description?: true
+  color?: true
   qrCode?: true
-  active?: true
   parentId?: true
   createdAt?: true
   updatedAt?: true
@@ -119,8 +119,8 @@ export type LocationCountAggregateInputType = {
   code?: true
   locationType?: true
   description?: true
+  color?: true
   qrCode?: true
-  active?: true
   parentId?: true
   createdAt?: true
   updatedAt?: true
@@ -219,8 +219,8 @@ export type LocationGroupByOutputType = {
   code: string
   locationType: string
   description: string | null
+  color: string
   qrCode: string
-  active: boolean
   parentId: number | null
   createdAt: Date
   updatedAt: Date
@@ -255,8 +255,8 @@ export type LocationWhereInput = {
   code?: Prisma.StringFilter<"Location"> | string
   locationType?: Prisma.StringFilter<"Location"> | string
   description?: Prisma.StringNullableFilter<"Location"> | string | null
-  qrCode?: Prisma.UuidFilter<"Location"> | string
-  active?: Prisma.BoolFilter<"Location"> | boolean
+  color?: Prisma.StringFilter<"Location"> | string
+  qrCode?: Prisma.StringFilter<"Location"> | string
   parentId?: Prisma.IntNullableFilter<"Location"> | number | null
   createdAt?: Prisma.DateTimeFilter<"Location"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Location"> | Date | string
@@ -274,8 +274,8 @@ export type LocationOrderByWithRelationInput = {
   code?: Prisma.SortOrder
   locationType?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
+  color?: Prisma.SortOrder
   qrCode?: Prisma.SortOrder
-  active?: Prisma.SortOrder
   parentId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -297,7 +297,7 @@ export type LocationWhereUniqueInput = Prisma.AtLeast<{
   name?: Prisma.StringFilter<"Location"> | string
   locationType?: Prisma.StringFilter<"Location"> | string
   description?: Prisma.StringNullableFilter<"Location"> | string | null
-  active?: Prisma.BoolFilter<"Location"> | boolean
+  color?: Prisma.StringFilter<"Location"> | string
   parentId?: Prisma.IntNullableFilter<"Location"> | number | null
   createdAt?: Prisma.DateTimeFilter<"Location"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Location"> | Date | string
@@ -315,8 +315,8 @@ export type LocationOrderByWithAggregationInput = {
   code?: Prisma.SortOrder
   locationType?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
+  color?: Prisma.SortOrder
   qrCode?: Prisma.SortOrder
-  active?: Prisma.SortOrder
   parentId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -336,8 +336,8 @@ export type LocationScalarWhereWithAggregatesInput = {
   code?: Prisma.StringWithAggregatesFilter<"Location"> | string
   locationType?: Prisma.StringWithAggregatesFilter<"Location"> | string
   description?: Prisma.StringNullableWithAggregatesFilter<"Location"> | string | null
-  qrCode?: Prisma.UuidWithAggregatesFilter<"Location"> | string
-  active?: Prisma.BoolWithAggregatesFilter<"Location"> | boolean
+  color?: Prisma.StringWithAggregatesFilter<"Location"> | string
+  qrCode?: Prisma.StringWithAggregatesFilter<"Location"> | string
   parentId?: Prisma.IntNullableWithAggregatesFilter<"Location"> | number | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Location"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Location"> | Date | string
@@ -348,8 +348,8 @@ export type LocationCreateInput = {
   code: string
   locationType?: string
   description?: string | null
+  color?: string
   qrCode?: string
-  active?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   parent?: Prisma.LocationCreateNestedOneWithoutChildrenInput
@@ -366,8 +366,8 @@ export type LocationUncheckedCreateInput = {
   code: string
   locationType?: string
   description?: string | null
+  color?: string
   qrCode?: string
-  active?: boolean
   parentId?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -383,8 +383,8 @@ export type LocationUpdateInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   locationType?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  color?: Prisma.StringFieldUpdateOperationsInput | string
   qrCode?: Prisma.StringFieldUpdateOperationsInput | string
-  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   parent?: Prisma.LocationUpdateOneWithoutChildrenNestedInput
@@ -401,8 +401,8 @@ export type LocationUncheckedUpdateInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   locationType?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  color?: Prisma.StringFieldUpdateOperationsInput | string
   qrCode?: Prisma.StringFieldUpdateOperationsInput | string
-  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   parentId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -419,8 +419,8 @@ export type LocationCreateManyInput = {
   code: string
   locationType?: string
   description?: string | null
+  color?: string
   qrCode?: string
-  active?: boolean
   parentId?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -431,8 +431,8 @@ export type LocationUpdateManyMutationInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   locationType?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  color?: Prisma.StringFieldUpdateOperationsInput | string
   qrCode?: Prisma.StringFieldUpdateOperationsInput | string
-  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -443,8 +443,8 @@ export type LocationUncheckedUpdateManyInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   locationType?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  color?: Prisma.StringFieldUpdateOperationsInput | string
   qrCode?: Prisma.StringFieldUpdateOperationsInput | string
-  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   parentId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -471,8 +471,8 @@ export type LocationCountOrderByAggregateInput = {
   code?: Prisma.SortOrder
   locationType?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  color?: Prisma.SortOrder
   qrCode?: Prisma.SortOrder
-  active?: Prisma.SortOrder
   parentId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -489,8 +489,8 @@ export type LocationMaxOrderByAggregateInput = {
   code?: Prisma.SortOrder
   locationType?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  color?: Prisma.SortOrder
   qrCode?: Prisma.SortOrder
-  active?: Prisma.SortOrder
   parentId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -502,8 +502,8 @@ export type LocationMinOrderByAggregateInput = {
   code?: Prisma.SortOrder
   locationType?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  color?: Prisma.SortOrder
   qrCode?: Prisma.SortOrder
-  active?: Prisma.SortOrder
   parentId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -537,10 +537,6 @@ export type LocationUncheckedCreateNestedManyWithoutParentInput = {
   connectOrCreate?: Prisma.LocationCreateOrConnectWithoutParentInput | Prisma.LocationCreateOrConnectWithoutParentInput[]
   createMany?: Prisma.LocationCreateManyParentInputEnvelope
   connect?: Prisma.LocationWhereUniqueInput | Prisma.LocationWhereUniqueInput[]
-}
-
-export type BoolFieldUpdateOperationsInput = {
-  set?: boolean
 }
 
 export type LocationUpdateOneWithoutChildrenNestedInput = {
@@ -656,8 +652,8 @@ export type LocationCreateWithoutChildrenInput = {
   code: string
   locationType?: string
   description?: string | null
+  color?: string
   qrCode?: string
-  active?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   parent?: Prisma.LocationCreateNestedOneWithoutChildrenInput
@@ -673,8 +669,8 @@ export type LocationUncheckedCreateWithoutChildrenInput = {
   code: string
   locationType?: string
   description?: string | null
+  color?: string
   qrCode?: string
-  active?: boolean
   parentId?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -694,8 +690,8 @@ export type LocationCreateWithoutParentInput = {
   code: string
   locationType?: string
   description?: string | null
+  color?: string
   qrCode?: string
-  active?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   children?: Prisma.LocationCreateNestedManyWithoutParentInput
@@ -711,8 +707,8 @@ export type LocationUncheckedCreateWithoutParentInput = {
   code: string
   locationType?: string
   description?: string | null
+  color?: string
   qrCode?: string
-  active?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   children?: Prisma.LocationUncheckedCreateNestedManyWithoutParentInput
@@ -729,7 +725,6 @@ export type LocationCreateOrConnectWithoutParentInput = {
 
 export type LocationCreateManyParentInputEnvelope = {
   data: Prisma.LocationCreateManyParentInput | Prisma.LocationCreateManyParentInput[]
-  skipDuplicates?: boolean
 }
 
 export type LocationUpsertWithoutChildrenInput = {
@@ -748,8 +743,8 @@ export type LocationUpdateWithoutChildrenInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   locationType?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  color?: Prisma.StringFieldUpdateOperationsInput | string
   qrCode?: Prisma.StringFieldUpdateOperationsInput | string
-  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   parent?: Prisma.LocationUpdateOneWithoutChildrenNestedInput
@@ -765,8 +760,8 @@ export type LocationUncheckedUpdateWithoutChildrenInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   locationType?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  color?: Prisma.StringFieldUpdateOperationsInput | string
   qrCode?: Prisma.StringFieldUpdateOperationsInput | string
-  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   parentId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -801,8 +796,8 @@ export type LocationScalarWhereInput = {
   code?: Prisma.StringFilter<"Location"> | string
   locationType?: Prisma.StringFilter<"Location"> | string
   description?: Prisma.StringNullableFilter<"Location"> | string | null
-  qrCode?: Prisma.UuidFilter<"Location"> | string
-  active?: Prisma.BoolFilter<"Location"> | boolean
+  color?: Prisma.StringFilter<"Location"> | string
+  qrCode?: Prisma.StringFilter<"Location"> | string
   parentId?: Prisma.IntNullableFilter<"Location"> | number | null
   createdAt?: Prisma.DateTimeFilter<"Location"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Location"> | Date | string
@@ -813,8 +808,8 @@ export type LocationCreateWithoutHomeForPartsInput = {
   code: string
   locationType?: string
   description?: string | null
+  color?: string
   qrCode?: string
-  active?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   parent?: Prisma.LocationCreateNestedOneWithoutChildrenInput
@@ -830,8 +825,8 @@ export type LocationUncheckedCreateWithoutHomeForPartsInput = {
   code: string
   locationType?: string
   description?: string | null
+  color?: string
   qrCode?: string
-  active?: boolean
   parentId?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -862,8 +857,8 @@ export type LocationUpdateWithoutHomeForPartsInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   locationType?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  color?: Prisma.StringFieldUpdateOperationsInput | string
   qrCode?: Prisma.StringFieldUpdateOperationsInput | string
-  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   parent?: Prisma.LocationUpdateOneWithoutChildrenNestedInput
@@ -879,8 +874,8 @@ export type LocationUncheckedUpdateWithoutHomeForPartsInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   locationType?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  color?: Prisma.StringFieldUpdateOperationsInput | string
   qrCode?: Prisma.StringFieldUpdateOperationsInput | string
-  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   parentId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -895,8 +890,8 @@ export type LocationCreateWithoutInventoryInput = {
   code: string
   locationType?: string
   description?: string | null
+  color?: string
   qrCode?: string
-  active?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   parent?: Prisma.LocationCreateNestedOneWithoutChildrenInput
@@ -912,8 +907,8 @@ export type LocationUncheckedCreateWithoutInventoryInput = {
   code: string
   locationType?: string
   description?: string | null
+  color?: string
   qrCode?: string
-  active?: boolean
   parentId?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -944,8 +939,8 @@ export type LocationUpdateWithoutInventoryInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   locationType?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  color?: Prisma.StringFieldUpdateOperationsInput | string
   qrCode?: Prisma.StringFieldUpdateOperationsInput | string
-  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   parent?: Prisma.LocationUpdateOneWithoutChildrenNestedInput
@@ -961,8 +956,8 @@ export type LocationUncheckedUpdateWithoutInventoryInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   locationType?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  color?: Prisma.StringFieldUpdateOperationsInput | string
   qrCode?: Prisma.StringFieldUpdateOperationsInput | string
-  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   parentId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -977,8 +972,8 @@ export type LocationCreateWithoutSourceTransactionsInput = {
   code: string
   locationType?: string
   description?: string | null
+  color?: string
   qrCode?: string
-  active?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   parent?: Prisma.LocationCreateNestedOneWithoutChildrenInput
@@ -994,8 +989,8 @@ export type LocationUncheckedCreateWithoutSourceTransactionsInput = {
   code: string
   locationType?: string
   description?: string | null
+  color?: string
   qrCode?: string
-  active?: boolean
   parentId?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1015,8 +1010,8 @@ export type LocationCreateWithoutDestinationTransactionsInput = {
   code: string
   locationType?: string
   description?: string | null
+  color?: string
   qrCode?: string
-  active?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   parent?: Prisma.LocationCreateNestedOneWithoutChildrenInput
@@ -1032,8 +1027,8 @@ export type LocationUncheckedCreateWithoutDestinationTransactionsInput = {
   code: string
   locationType?: string
   description?: string | null
+  color?: string
   qrCode?: string
-  active?: boolean
   parentId?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1064,8 +1059,8 @@ export type LocationUpdateWithoutSourceTransactionsInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   locationType?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  color?: Prisma.StringFieldUpdateOperationsInput | string
   qrCode?: Prisma.StringFieldUpdateOperationsInput | string
-  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   parent?: Prisma.LocationUpdateOneWithoutChildrenNestedInput
@@ -1081,8 +1076,8 @@ export type LocationUncheckedUpdateWithoutSourceTransactionsInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   locationType?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  color?: Prisma.StringFieldUpdateOperationsInput | string
   qrCode?: Prisma.StringFieldUpdateOperationsInput | string
-  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   parentId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1108,8 +1103,8 @@ export type LocationUpdateWithoutDestinationTransactionsInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   locationType?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  color?: Prisma.StringFieldUpdateOperationsInput | string
   qrCode?: Prisma.StringFieldUpdateOperationsInput | string
-  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   parent?: Prisma.LocationUpdateOneWithoutChildrenNestedInput
@@ -1125,8 +1120,8 @@ export type LocationUncheckedUpdateWithoutDestinationTransactionsInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   locationType?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  color?: Prisma.StringFieldUpdateOperationsInput | string
   qrCode?: Prisma.StringFieldUpdateOperationsInput | string
-  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   parentId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1142,8 +1137,8 @@ export type LocationCreateManyParentInput = {
   code: string
   locationType?: string
   description?: string | null
+  color?: string
   qrCode?: string
-  active?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1153,8 +1148,8 @@ export type LocationUpdateWithoutParentInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   locationType?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  color?: Prisma.StringFieldUpdateOperationsInput | string
   qrCode?: Prisma.StringFieldUpdateOperationsInput | string
-  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   children?: Prisma.LocationUpdateManyWithoutParentNestedInput
@@ -1170,8 +1165,8 @@ export type LocationUncheckedUpdateWithoutParentInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   locationType?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  color?: Prisma.StringFieldUpdateOperationsInput | string
   qrCode?: Prisma.StringFieldUpdateOperationsInput | string
-  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   children?: Prisma.LocationUncheckedUpdateManyWithoutParentNestedInput
@@ -1187,8 +1182,8 @@ export type LocationUncheckedUpdateManyWithoutParentInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   locationType?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  color?: Prisma.StringFieldUpdateOperationsInput | string
   qrCode?: Prisma.StringFieldUpdateOperationsInput | string
-  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1266,8 +1261,8 @@ export type LocationSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   code?: boolean
   locationType?: boolean
   description?: boolean
+  color?: boolean
   qrCode?: boolean
-  active?: boolean
   parentId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1286,8 +1281,8 @@ export type LocationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   code?: boolean
   locationType?: boolean
   description?: boolean
+  color?: boolean
   qrCode?: boolean
-  active?: boolean
   parentId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1300,8 +1295,8 @@ export type LocationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   code?: boolean
   locationType?: boolean
   description?: boolean
+  color?: boolean
   qrCode?: boolean
-  active?: boolean
   parentId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1314,14 +1309,14 @@ export type LocationSelectScalar = {
   code?: boolean
   locationType?: boolean
   description?: boolean
+  color?: boolean
   qrCode?: boolean
-  active?: boolean
   parentId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type LocationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "code" | "locationType" | "description" | "qrCode" | "active" | "parentId" | "createdAt" | "updatedAt", ExtArgs["result"]["location"]>
+export type LocationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "code" | "locationType" | "description" | "color" | "qrCode" | "parentId" | "createdAt" | "updatedAt", ExtArgs["result"]["location"]>
 export type LocationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   parent?: boolean | Prisma.Location$parentArgs<ExtArgs>
   children?: boolean | Prisma.Location$childrenArgs<ExtArgs>
@@ -1354,8 +1349,8 @@ export type $LocationPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     code: string
     locationType: string
     description: string | null
+    color: string
     qrCode: string
-    active: boolean
     parentId: number | null
     createdAt: Date
     updatedAt: Date
@@ -1793,8 +1788,8 @@ export interface LocationFieldRefs {
   readonly code: Prisma.FieldRef<"Location", 'String'>
   readonly locationType: Prisma.FieldRef<"Location", 'String'>
   readonly description: Prisma.FieldRef<"Location", 'String'>
+  readonly color: Prisma.FieldRef<"Location", 'String'>
   readonly qrCode: Prisma.FieldRef<"Location", 'String'>
-  readonly active: Prisma.FieldRef<"Location", 'Boolean'>
   readonly parentId: Prisma.FieldRef<"Location", 'Int'>
   readonly createdAt: Prisma.FieldRef<"Location", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Location", 'DateTime'>
@@ -2032,7 +2027,6 @@ export type LocationCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * The data used to create many Locations.
    */
   data: Prisma.LocationCreateManyInput | Prisma.LocationCreateManyInput[]
-  skipDuplicates?: boolean
 }
 
 /**
@@ -2051,7 +2045,6 @@ export type LocationCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extens
    * The data used to create many Locations.
    */
   data: Prisma.LocationCreateManyInput | Prisma.LocationCreateManyInput[]
-  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */

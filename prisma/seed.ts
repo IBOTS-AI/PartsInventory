@@ -1,16 +1,27 @@
 import 'dotenv/config';
-import { PrismaPg } from '@prisma/adapter-pg';
+import path from 'node:path';
+import { PrismaLibSql } from '@prisma/adapter-libsql';
 import { PrismaClient } from '../server/src/generated/prisma/client';
 
-const adapter = new PrismaPg({
-  connectionString: process.env.DATABASE_URL!,
+function resolveDatabaseUrl(rawUrl: string, projectRoot: string) {
+  if (!rawUrl.startsWith('file:')) return rawUrl;
+  const filePath = rawUrl.slice('file:'.length);
+  if (path.isAbsolute(filePath)) return rawUrl;
+  return `file:${path.resolve(projectRoot, filePath).replace(/\\/g, '/')}`;
+}
+
+const projectRoot = path.resolve(process.cwd());
+const databaseUrl = resolveDatabaseUrl(process.env.DATABASE_URL || 'file:./prisma/ibots.db', projectRoot);
+
+const adapter = new PrismaLibSql({
+  url: databaseUrl,
 });
 
 const prisma = new PrismaClient({ adapter });
 
 async function main() {
-  // Categories
-  const powerTransmission = await prisma.category.upsert({
+  // Tags
+  const powerTransmission = await prisma.tag.upsert({
     where: { code: 'PWR' },
     update: {},
     create: {
@@ -21,7 +32,7 @@ async function main() {
     },
   });
 
-  const wheels = await prisma.category.upsert({
+  const wheels = await prisma.tag.upsert({
     where: { code: 'WHL' },
     update: {},
     create: {
@@ -32,7 +43,7 @@ async function main() {
     },
   });
 
-  const fasteners = await prisma.category.upsert({
+  const fasteners = await prisma.tag.upsert({
     where: { code: 'FST' },
     update: {},
     create: {
@@ -59,7 +70,7 @@ async function main() {
     create: {
       name: "Compact bin label",
       target: "location",
-      showCategory: false,
+      showTag: false,
       showSku: false,
       showManufacturerNumber: false,
       showLocation: false,
@@ -126,7 +137,7 @@ async function main() {
       sku: 'FST-0001',
       name: '1/4-20 Hex Bolt',
       description: 'General purpose 1/4-20 hex bolt',
-      categoryId: fasteners.id,
+      tags: { create: [{ tag: { connect: { id: fasteners.id } } }] },
       unitOfMeasure: 'each',
       minimumQuantity: 50,
       reorderQuantity: 100,

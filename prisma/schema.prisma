@@ -1,15 +1,13 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
   provider = "prisma-client"
   output   = "../server/src/generated/prisma"
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
 }
 
 enum TransactionType {
@@ -17,9 +15,11 @@ enum TransactionType {
   REMOVE
   ADJUST
   TRANSFER
+  RESERVE
+  UNRESERVE
 }
 
-model Category {
+model Tag {
   id          Int      @id @default(autoincrement())
   name        String   @unique
   code        String   @unique
@@ -28,9 +28,9 @@ model Category {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  parts Part[]
+  parts PartTag[]
 
-  @@map("categories")
+  @@map("tags")
 }
 
 model Location {
@@ -39,8 +39,8 @@ model Location {
   code         String   @unique
   locationType String   @default("other")
   description  String?
-  qrCode       String   @unique @default(uuid()) @db.Uuid
-  active       Boolean  @default(true)
+  color        String   @default("#1d5d70")
+  qrCode       String   @unique @default(uuid())
   parentId     Int?
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
@@ -60,24 +60,24 @@ model Location {
 
 model Part {
   id                     Int      @id @default(autoincrement())
-  qrCode                 String   @unique @default(uuid()) @db.Uuid
+  qrCode                 String   @unique @default(uuid())
   sku                    String?  @unique
   name                   String
   description            String?
   manufacturer           String?
   manufacturerPartNumber String?
   manufacturerUrl        String?
+  sourceUrl              String?
+  weightGrams            Decimal?
   unitOfMeasure          String   @default("each")
-  minimumQuantity        Decimal  @default(0) @db.Decimal(12, 3)
-  reorderQuantity        Decimal  @default(0) @db.Decimal(12, 3)
+  minimumQuantity        Decimal  @default(0)
+  reorderQuantity        Decimal  @default(0)
   notes                  String?
   active                 Boolean  @default(true)
-  categoryId             Int
   homeLocationId         Int?
   createdAt              DateTime @default(now())
   updatedAt              DateTime @updatedAt
 
-  category     Category               @relation(fields: [categoryId], references: [id])
   homeLocation Location?              @relation("PartHomeLocation", fields: [homeLocationId], references: [id], onDelete: SetNull)
   inventory    Inventory[]
   transactions InventoryTransaction[]
@@ -85,19 +85,31 @@ model Part {
   aliases   PartAlias[]
   suppliers PartSupplier[]
   images    PartImage[]
+  tags      PartTag[]
 
-  @@index([categoryId])
   @@index([homeLocationId])
   @@index([name])
   @@index([manufacturerPartNumber])
   @@map("parts")
 }
 
+model PartTag {
+  partId Int
+  tagId  Int
+
+  part Part @relation(fields: [partId], references: [id], onDelete: Cascade)
+  tag  Tag  @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([partId, tagId])
+  @@index([tagId])
+  @@map("part_tags")
+}
+
 model Inventory {
   id         Int      @id @default(autoincrement())
   partId     Int
   locationId Int
-  quantity   Decimal  @default(0) @db.Decimal(12, 3)
+  quantity   Decimal  @default(0)
   updatedAt  DateTime @updatedAt
 
   part     Part     @relation(fields: [partId], references: [id])
@@ -114,7 +126,7 @@ model InventoryTransaction {
   locationId    Int?
   destinationId Int?
   type          TransactionType
-  quantity      Decimal         @db.Decimal(12, 3)
+  quantity      Decimal
   notes         String?
   operatorName  String?
   createdAt     DateTime        @default(now())
@@ -164,7 +176,7 @@ model PartSupplier {
   supplierId         Int
   supplierPartNumber String?
   productUrl         String?
-  unitPrice          Decimal? @db.Decimal(10, 2)
+  unitPrice          Decimal?
   preferred          Boolean  @default(false)
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt
@@ -198,7 +210,7 @@ model LabelTemplate {
   id                     Int      @id @default(autoincrement())
   name                   String   @unique
   target                 String   @default("both")
-  showCategory           Boolean  @default(true)
+  showTag                Boolean  @default(true)
   showSku                Boolean  @default(true)
   showManufacturerNumber Boolean  @default(true)
   showLocation           Boolean  @default(true)

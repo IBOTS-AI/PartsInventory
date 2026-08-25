@@ -13,7 +13,9 @@ export const TransactionType = {
   ADD: 'ADD',
   REMOVE: 'REMOVE',
   ADJUST: 'ADJUST',
-  TRANSFER: 'TRANSFER'
+  TRANSFER: 'TRANSFER',
+  RESERVE: 'RESERVE',
+  UNRESERVE: 'UNRESERVE'
 } as const
 
 export type TransactionType = (typeof TransactionType)[keyof typeof TransactionType]

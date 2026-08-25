@@ -28,17 +28,17 @@ export type AggregatePart = {
 
 export type PartAvgAggregateOutputType = {
   id: number | null
+  weightGrams: runtime.Decimal | null
   minimumQuantity: runtime.Decimal | null
   reorderQuantity: runtime.Decimal | null
-  categoryId: number | null
   homeLocationId: number | null
 }
 
 export type PartSumAggregateOutputType = {
   id: number | null
+  weightGrams: runtime.Decimal | null
   minimumQuantity: runtime.Decimal | null
   reorderQuantity: runtime.Decimal | null
-  categoryId: number | null
   homeLocationId: number | null
 }
 
@@ -51,12 +51,13 @@ export type PartMinAggregateOutputType = {
   manufacturer: string | null
   manufacturerPartNumber: string | null
   manufacturerUrl: string | null
+  sourceUrl: string | null
+  weightGrams: runtime.Decimal | null
   unitOfMeasure: string | null
   minimumQuantity: runtime.Decimal | null
   reorderQuantity: runtime.Decimal | null
   notes: string | null
   active: boolean | null
-  categoryId: number | null
   homeLocationId: number | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -71,12 +72,13 @@ export type PartMaxAggregateOutputType = {
   manufacturer: string | null
   manufacturerPartNumber: string | null
   manufacturerUrl: string | null
+  sourceUrl: string | null
+  weightGrams: runtime.Decimal | null
   unitOfMeasure: string | null
   minimumQuantity: runtime.Decimal | null
   reorderQuantity: runtime.Decimal | null
   notes: string | null
   active: boolean | null
-  categoryId: number | null
   homeLocationId: number | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -91,12 +93,13 @@ export type PartCountAggregateOutputType = {
   manufacturer: number
   manufacturerPartNumber: number
   manufacturerUrl: number
+  sourceUrl: number
+  weightGrams: number
   unitOfMeasure: number
   minimumQuantity: number
   reorderQuantity: number
   notes: number
   active: number
-  categoryId: number
   homeLocationId: number
   createdAt: number
   updatedAt: number
@@ -106,17 +109,17 @@ export type PartCountAggregateOutputType = {
 
 export type PartAvgAggregateInputType = {
   id?: true
+  weightGrams?: true
   minimumQuantity?: true
   reorderQuantity?: true
-  categoryId?: true
   homeLocationId?: true
 }
 
 export type PartSumAggregateInputType = {
   id?: true
+  weightGrams?: true
   minimumQuantity?: true
   reorderQuantity?: true
-  categoryId?: true
   homeLocationId?: true
 }
 
@@ -129,12 +132,13 @@ export type PartMinAggregateInputType = {
   manufacturer?: true
   manufacturerPartNumber?: true
   manufacturerUrl?: true
+  sourceUrl?: true
+  weightGrams?: true
   unitOfMeasure?: true
   minimumQuantity?: true
   reorderQuantity?: true
   notes?: true
   active?: true
-  categoryId?: true
   homeLocationId?: true
   createdAt?: true
   updatedAt?: true
@@ -149,12 +153,13 @@ export type PartMaxAggregateInputType = {
   manufacturer?: true
   manufacturerPartNumber?: true
   manufacturerUrl?: true
+  sourceUrl?: true
+  weightGrams?: true
   unitOfMeasure?: true
   minimumQuantity?: true
   reorderQuantity?: true
   notes?: true
   active?: true
-  categoryId?: true
   homeLocationId?: true
   createdAt?: true
   updatedAt?: true
@@ -169,12 +174,13 @@ export type PartCountAggregateInputType = {
   manufacturer?: true
   manufacturerPartNumber?: true
   manufacturerUrl?: true
+  sourceUrl?: true
+  weightGrams?: true
   unitOfMeasure?: true
   minimumQuantity?: true
   reorderQuantity?: true
   notes?: true
   active?: true
-  categoryId?: true
   homeLocationId?: true
   createdAt?: true
   updatedAt?: true
@@ -276,12 +282,13 @@ export type PartGroupByOutputType = {
   manufacturer: string | null
   manufacturerPartNumber: string | null
   manufacturerUrl: string | null
+  sourceUrl: string | null
+  weightGrams: runtime.Decimal | null
   unitOfMeasure: string
   minimumQuantity: runtime.Decimal
   reorderQuantity: runtime.Decimal
   notes: string | null
   active: boolean
-  categoryId: number
   homeLocationId: number | null
   createdAt: Date
   updatedAt: Date
@@ -312,29 +319,30 @@ export type PartWhereInput = {
   OR?: Prisma.PartWhereInput[]
   NOT?: Prisma.PartWhereInput | Prisma.PartWhereInput[]
   id?: Prisma.IntFilter<"Part"> | number
-  qrCode?: Prisma.UuidFilter<"Part"> | string
+  qrCode?: Prisma.StringFilter<"Part"> | string
   sku?: Prisma.StringNullableFilter<"Part"> | string | null
   name?: Prisma.StringFilter<"Part"> | string
   description?: Prisma.StringNullableFilter<"Part"> | string | null
   manufacturer?: Prisma.StringNullableFilter<"Part"> | string | null
   manufacturerPartNumber?: Prisma.StringNullableFilter<"Part"> | string | null
   manufacturerUrl?: Prisma.StringNullableFilter<"Part"> | string | null
+  sourceUrl?: Prisma.StringNullableFilter<"Part"> | string | null
+  weightGrams?: Prisma.DecimalNullableFilter<"Part"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitOfMeasure?: Prisma.StringFilter<"Part"> | string
   minimumQuantity?: Prisma.DecimalFilter<"Part"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   reorderQuantity?: Prisma.DecimalFilter<"Part"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: Prisma.StringNullableFilter<"Part"> | string | null
   active?: Prisma.BoolFilter<"Part"> | boolean
-  categoryId?: Prisma.IntFilter<"Part"> | number
   homeLocationId?: Prisma.IntNullableFilter<"Part"> | number | null
   createdAt?: Prisma.DateTimeFilter<"Part"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Part"> | Date | string
-  category?: Prisma.XOR<Prisma.CategoryScalarRelationFilter, Prisma.CategoryWhereInput>
   homeLocation?: Prisma.XOR<Prisma.LocationNullableScalarRelationFilter, Prisma.LocationWhereInput> | null
   inventory?: Prisma.InventoryListRelationFilter
   transactions?: Prisma.InventoryTransactionListRelationFilter
   aliases?: Prisma.PartAliasListRelationFilter
   suppliers?: Prisma.PartSupplierListRelationFilter
   images?: Prisma.PartImageListRelationFilter
+  tags?: Prisma.PartTagListRelationFilter
 }
 
 export type PartOrderByWithRelationInput = {
@@ -346,22 +354,23 @@ export type PartOrderByWithRelationInput = {
   manufacturer?: Prisma.SortOrderInput | Prisma.SortOrder
   manufacturerPartNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   manufacturerUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  sourceUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  weightGrams?: Prisma.SortOrderInput | Prisma.SortOrder
   unitOfMeasure?: Prisma.SortOrder
   minimumQuantity?: Prisma.SortOrder
   reorderQuantity?: Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   active?: Prisma.SortOrder
-  categoryId?: Prisma.SortOrder
   homeLocationId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  category?: Prisma.CategoryOrderByWithRelationInput
   homeLocation?: Prisma.LocationOrderByWithRelationInput
   inventory?: Prisma.InventoryOrderByRelationAggregateInput
   transactions?: Prisma.InventoryTransactionOrderByRelationAggregateInput
   aliases?: Prisma.PartAliasOrderByRelationAggregateInput
   suppliers?: Prisma.PartSupplierOrderByRelationAggregateInput
   images?: Prisma.PartImageOrderByRelationAggregateInput
+  tags?: Prisma.PartTagOrderByRelationAggregateInput
 }
 
 export type PartWhereUniqueInput = Prisma.AtLeast<{
@@ -376,22 +385,23 @@ export type PartWhereUniqueInput = Prisma.AtLeast<{
   manufacturer?: Prisma.StringNullableFilter<"Part"> | string | null
   manufacturerPartNumber?: Prisma.StringNullableFilter<"Part"> | string | null
   manufacturerUrl?: Prisma.StringNullableFilter<"Part"> | string | null
+  sourceUrl?: Prisma.StringNullableFilter<"Part"> | string | null
+  weightGrams?: Prisma.DecimalNullableFilter<"Part"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitOfMeasure?: Prisma.StringFilter<"Part"> | string
   minimumQuantity?: Prisma.DecimalFilter<"Part"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   reorderQuantity?: Prisma.DecimalFilter<"Part"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: Prisma.StringNullableFilter<"Part"> | string | null
   active?: Prisma.BoolFilter<"Part"> | boolean
-  categoryId?: Prisma.IntFilter<"Part"> | number
   homeLocationId?: Prisma.IntNullableFilter<"Part"> | number | null
   createdAt?: Prisma.DateTimeFilter<"Part"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Part"> | Date | string
-  category?: Prisma.XOR<Prisma.CategoryScalarRelationFilter, Prisma.CategoryWhereInput>
   homeLocation?: Prisma.XOR<Prisma.LocationNullableScalarRelationFilter, Prisma.LocationWhereInput> | null
   inventory?: Prisma.InventoryListRelationFilter
   transactions?: Prisma.InventoryTransactionListRelationFilter
   aliases?: Prisma.PartAliasListRelationFilter
   suppliers?: Prisma.PartSupplierListRelationFilter
   images?: Prisma.PartImageListRelationFilter
+  tags?: Prisma.PartTagListRelationFilter
 }, "id" | "qrCode" | "sku">
 
 export type PartOrderByWithAggregationInput = {
@@ -403,12 +413,13 @@ export type PartOrderByWithAggregationInput = {
   manufacturer?: Prisma.SortOrderInput | Prisma.SortOrder
   manufacturerPartNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   manufacturerUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  sourceUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  weightGrams?: Prisma.SortOrderInput | Prisma.SortOrder
   unitOfMeasure?: Prisma.SortOrder
   minimumQuantity?: Prisma.SortOrder
   reorderQuantity?: Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   active?: Prisma.SortOrder
-  categoryId?: Prisma.SortOrder
   homeLocationId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -424,19 +435,20 @@ export type PartScalarWhereWithAggregatesInput = {
   OR?: Prisma.PartScalarWhereWithAggregatesInput[]
   NOT?: Prisma.PartScalarWhereWithAggregatesInput | Prisma.PartScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"Part"> | number
-  qrCode?: Prisma.UuidWithAggregatesFilter<"Part"> | string
+  qrCode?: Prisma.StringWithAggregatesFilter<"Part"> | string
   sku?: Prisma.StringNullableWithAggregatesFilter<"Part"> | string | null
   name?: Prisma.StringWithAggregatesFilter<"Part"> | string
   description?: Prisma.StringNullableWithAggregatesFilter<"Part"> | string | null
   manufacturer?: Prisma.StringNullableWithAggregatesFilter<"Part"> | string | null
   manufacturerPartNumber?: Prisma.StringNullableWithAggregatesFilter<"Part"> | string | null
   manufacturerUrl?: Prisma.StringNullableWithAggregatesFilter<"Part"> | string | null
+  sourceUrl?: Prisma.StringNullableWithAggregatesFilter<"Part"> | string | null
+  weightGrams?: Prisma.DecimalNullableWithAggregatesFilter<"Part"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitOfMeasure?: Prisma.StringWithAggregatesFilter<"Part"> | string
   minimumQuantity?: Prisma.DecimalWithAggregatesFilter<"Part"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   reorderQuantity?: Prisma.DecimalWithAggregatesFilter<"Part"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: Prisma.StringNullableWithAggregatesFilter<"Part"> | string | null
   active?: Prisma.BoolWithAggregatesFilter<"Part"> | boolean
-  categoryId?: Prisma.IntWithAggregatesFilter<"Part"> | number
   homeLocationId?: Prisma.IntNullableWithAggregatesFilter<"Part"> | number | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Part"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Part"> | Date | string
@@ -450,6 +462,8 @@ export type PartCreateInput = {
   manufacturer?: string | null
   manufacturerPartNumber?: string | null
   manufacturerUrl?: string | null
+  sourceUrl?: string | null
+  weightGrams?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitOfMeasure?: string
   minimumQuantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
   reorderQuantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -457,13 +471,13 @@ export type PartCreateInput = {
   active?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  category: Prisma.CategoryCreateNestedOneWithoutPartsInput
   homeLocation?: Prisma.LocationCreateNestedOneWithoutHomeForPartsInput
   inventory?: Prisma.InventoryCreateNestedManyWithoutPartInput
   transactions?: Prisma.InventoryTransactionCreateNestedManyWithoutPartInput
   aliases?: Prisma.PartAliasCreateNestedManyWithoutPartInput
   suppliers?: Prisma.PartSupplierCreateNestedManyWithoutPartInput
   images?: Prisma.PartImageCreateNestedManyWithoutPartInput
+  tags?: Prisma.PartTagCreateNestedManyWithoutPartInput
 }
 
 export type PartUncheckedCreateInput = {
@@ -475,12 +489,13 @@ export type PartUncheckedCreateInput = {
   manufacturer?: string | null
   manufacturerPartNumber?: string | null
   manufacturerUrl?: string | null
+  sourceUrl?: string | null
+  weightGrams?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitOfMeasure?: string
   minimumQuantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
   reorderQuantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: string | null
   active?: boolean
-  categoryId: number
   homeLocationId?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -489,6 +504,7 @@ export type PartUncheckedCreateInput = {
   aliases?: Prisma.PartAliasUncheckedCreateNestedManyWithoutPartInput
   suppliers?: Prisma.PartSupplierUncheckedCreateNestedManyWithoutPartInput
   images?: Prisma.PartImageUncheckedCreateNestedManyWithoutPartInput
+  tags?: Prisma.PartTagUncheckedCreateNestedManyWithoutPartInput
 }
 
 export type PartUpdateInput = {
@@ -499,6 +515,8 @@ export type PartUpdateInput = {
   manufacturer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   manufacturerPartNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   manufacturerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  weightGrams?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitOfMeasure?: Prisma.StringFieldUpdateOperationsInput | string
   minimumQuantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   reorderQuantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -506,13 +524,13 @@ export type PartUpdateInput = {
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  category?: Prisma.CategoryUpdateOneRequiredWithoutPartsNestedInput
   homeLocation?: Prisma.LocationUpdateOneWithoutHomeForPartsNestedInput
   inventory?: Prisma.InventoryUpdateManyWithoutPartNestedInput
   transactions?: Prisma.InventoryTransactionUpdateManyWithoutPartNestedInput
   aliases?: Prisma.PartAliasUpdateManyWithoutPartNestedInput
   suppliers?: Prisma.PartSupplierUpdateManyWithoutPartNestedInput
   images?: Prisma.PartImageUpdateManyWithoutPartNestedInput
+  tags?: Prisma.PartTagUpdateManyWithoutPartNestedInput
 }
 
 export type PartUncheckedUpdateInput = {
@@ -524,12 +542,13 @@ export type PartUncheckedUpdateInput = {
   manufacturer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   manufacturerPartNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   manufacturerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  weightGrams?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitOfMeasure?: Prisma.StringFieldUpdateOperationsInput | string
   minimumQuantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   reorderQuantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  categoryId?: Prisma.IntFieldUpdateOperationsInput | number
   homeLocationId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -538,6 +557,7 @@ export type PartUncheckedUpdateInput = {
   aliases?: Prisma.PartAliasUncheckedUpdateManyWithoutPartNestedInput
   suppliers?: Prisma.PartSupplierUncheckedUpdateManyWithoutPartNestedInput
   images?: Prisma.PartImageUncheckedUpdateManyWithoutPartNestedInput
+  tags?: Prisma.PartTagUncheckedUpdateManyWithoutPartNestedInput
 }
 
 export type PartCreateManyInput = {
@@ -549,12 +569,13 @@ export type PartCreateManyInput = {
   manufacturer?: string | null
   manufacturerPartNumber?: string | null
   manufacturerUrl?: string | null
+  sourceUrl?: string | null
+  weightGrams?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitOfMeasure?: string
   minimumQuantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
   reorderQuantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: string | null
   active?: boolean
-  categoryId: number
   homeLocationId?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -568,6 +589,8 @@ export type PartUpdateManyMutationInput = {
   manufacturer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   manufacturerPartNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   manufacturerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  weightGrams?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitOfMeasure?: Prisma.StringFieldUpdateOperationsInput | string
   minimumQuantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   reorderQuantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -586,12 +609,13 @@ export type PartUncheckedUpdateManyInput = {
   manufacturer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   manufacturerPartNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   manufacturerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  weightGrams?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitOfMeasure?: Prisma.StringFieldUpdateOperationsInput | string
   minimumQuantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   reorderQuantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  categoryId?: Prisma.IntFieldUpdateOperationsInput | number
   homeLocationId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -616,12 +640,13 @@ export type PartCountOrderByAggregateInput = {
   manufacturer?: Prisma.SortOrder
   manufacturerPartNumber?: Prisma.SortOrder
   manufacturerUrl?: Prisma.SortOrder
+  sourceUrl?: Prisma.SortOrder
+  weightGrams?: Prisma.SortOrder
   unitOfMeasure?: Prisma.SortOrder
   minimumQuantity?: Prisma.SortOrder
   reorderQuantity?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   active?: Prisma.SortOrder
-  categoryId?: Prisma.SortOrder
   homeLocationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -629,9 +654,9 @@ export type PartCountOrderByAggregateInput = {
 
 export type PartAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  weightGrams?: Prisma.SortOrder
   minimumQuantity?: Prisma.SortOrder
   reorderQuantity?: Prisma.SortOrder
-  categoryId?: Prisma.SortOrder
   homeLocationId?: Prisma.SortOrder
 }
 
@@ -644,12 +669,13 @@ export type PartMaxOrderByAggregateInput = {
   manufacturer?: Prisma.SortOrder
   manufacturerPartNumber?: Prisma.SortOrder
   manufacturerUrl?: Prisma.SortOrder
+  sourceUrl?: Prisma.SortOrder
+  weightGrams?: Prisma.SortOrder
   unitOfMeasure?: Prisma.SortOrder
   minimumQuantity?: Prisma.SortOrder
   reorderQuantity?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   active?: Prisma.SortOrder
-  categoryId?: Prisma.SortOrder
   homeLocationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -664,12 +690,13 @@ export type PartMinOrderByAggregateInput = {
   manufacturer?: Prisma.SortOrder
   manufacturerPartNumber?: Prisma.SortOrder
   manufacturerUrl?: Prisma.SortOrder
+  sourceUrl?: Prisma.SortOrder
+  weightGrams?: Prisma.SortOrder
   unitOfMeasure?: Prisma.SortOrder
   minimumQuantity?: Prisma.SortOrder
   reorderQuantity?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   active?: Prisma.SortOrder
-  categoryId?: Prisma.SortOrder
   homeLocationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -677,57 +704,15 @@ export type PartMinOrderByAggregateInput = {
 
 export type PartSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  weightGrams?: Prisma.SortOrder
   minimumQuantity?: Prisma.SortOrder
   reorderQuantity?: Prisma.SortOrder
-  categoryId?: Prisma.SortOrder
   homeLocationId?: Prisma.SortOrder
 }
 
 export type PartScalarRelationFilter = {
   is?: Prisma.PartWhereInput
   isNot?: Prisma.PartWhereInput
-}
-
-export type PartCreateNestedManyWithoutCategoryInput = {
-  create?: Prisma.XOR<Prisma.PartCreateWithoutCategoryInput, Prisma.PartUncheckedCreateWithoutCategoryInput> | Prisma.PartCreateWithoutCategoryInput[] | Prisma.PartUncheckedCreateWithoutCategoryInput[]
-  connectOrCreate?: Prisma.PartCreateOrConnectWithoutCategoryInput | Prisma.PartCreateOrConnectWithoutCategoryInput[]
-  createMany?: Prisma.PartCreateManyCategoryInputEnvelope
-  connect?: Prisma.PartWhereUniqueInput | Prisma.PartWhereUniqueInput[]
-}
-
-export type PartUncheckedCreateNestedManyWithoutCategoryInput = {
-  create?: Prisma.XOR<Prisma.PartCreateWithoutCategoryInput, Prisma.PartUncheckedCreateWithoutCategoryInput> | Prisma.PartCreateWithoutCategoryInput[] | Prisma.PartUncheckedCreateWithoutCategoryInput[]
-  connectOrCreate?: Prisma.PartCreateOrConnectWithoutCategoryInput | Prisma.PartCreateOrConnectWithoutCategoryInput[]
-  createMany?: Prisma.PartCreateManyCategoryInputEnvelope
-  connect?: Prisma.PartWhereUniqueInput | Prisma.PartWhereUniqueInput[]
-}
-
-export type PartUpdateManyWithoutCategoryNestedInput = {
-  create?: Prisma.XOR<Prisma.PartCreateWithoutCategoryInput, Prisma.PartUncheckedCreateWithoutCategoryInput> | Prisma.PartCreateWithoutCategoryInput[] | Prisma.PartUncheckedCreateWithoutCategoryInput[]
-  connectOrCreate?: Prisma.PartCreateOrConnectWithoutCategoryInput | Prisma.PartCreateOrConnectWithoutCategoryInput[]
-  upsert?: Prisma.PartUpsertWithWhereUniqueWithoutCategoryInput | Prisma.PartUpsertWithWhereUniqueWithoutCategoryInput[]
-  createMany?: Prisma.PartCreateManyCategoryInputEnvelope
-  set?: Prisma.PartWhereUniqueInput | Prisma.PartWhereUniqueInput[]
-  disconnect?: Prisma.PartWhereUniqueInput | Prisma.PartWhereUniqueInput[]
-  delete?: Prisma.PartWhereUniqueInput | Prisma.PartWhereUniqueInput[]
-  connect?: Prisma.PartWhereUniqueInput | Prisma.PartWhereUniqueInput[]
-  update?: Prisma.PartUpdateWithWhereUniqueWithoutCategoryInput | Prisma.PartUpdateWithWhereUniqueWithoutCategoryInput[]
-  updateMany?: Prisma.PartUpdateManyWithWhereWithoutCategoryInput | Prisma.PartUpdateManyWithWhereWithoutCategoryInput[]
-  deleteMany?: Prisma.PartScalarWhereInput | Prisma.PartScalarWhereInput[]
-}
-
-export type PartUncheckedUpdateManyWithoutCategoryNestedInput = {
-  create?: Prisma.XOR<Prisma.PartCreateWithoutCategoryInput, Prisma.PartUncheckedCreateWithoutCategoryInput> | Prisma.PartCreateWithoutCategoryInput[] | Prisma.PartUncheckedCreateWithoutCategoryInput[]
-  connectOrCreate?: Prisma.PartCreateOrConnectWithoutCategoryInput | Prisma.PartCreateOrConnectWithoutCategoryInput[]
-  upsert?: Prisma.PartUpsertWithWhereUniqueWithoutCategoryInput | Prisma.PartUpsertWithWhereUniqueWithoutCategoryInput[]
-  createMany?: Prisma.PartCreateManyCategoryInputEnvelope
-  set?: Prisma.PartWhereUniqueInput | Prisma.PartWhereUniqueInput[]
-  disconnect?: Prisma.PartWhereUniqueInput | Prisma.PartWhereUniqueInput[]
-  delete?: Prisma.PartWhereUniqueInput | Prisma.PartWhereUniqueInput[]
-  connect?: Prisma.PartWhereUniqueInput | Prisma.PartWhereUniqueInput[]
-  update?: Prisma.PartUpdateWithWhereUniqueWithoutCategoryInput | Prisma.PartUpdateWithWhereUniqueWithoutCategoryInput[]
-  updateMany?: Prisma.PartUpdateManyWithWhereWithoutCategoryInput | Prisma.PartUpdateManyWithWhereWithoutCategoryInput[]
-  deleteMany?: Prisma.PartScalarWhereInput | Prisma.PartScalarWhereInput[]
 }
 
 export type PartCreateNestedManyWithoutHomeLocationInput = {
@@ -772,12 +757,38 @@ export type PartUncheckedUpdateManyWithoutHomeLocationNestedInput = {
   deleteMany?: Prisma.PartScalarWhereInput | Prisma.PartScalarWhereInput[]
 }
 
+export type NullableDecimalFieldUpdateOperationsInput = {
+  set?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
+}
+
 export type DecimalFieldUpdateOperationsInput = {
   set?: runtime.Decimal | runtime.DecimalJsLike | number | string
   increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
   decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
   multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
   divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
+}
+
+export type BoolFieldUpdateOperationsInput = {
+  set?: boolean
+}
+
+export type PartCreateNestedOneWithoutTagsInput = {
+  create?: Prisma.XOR<Prisma.PartCreateWithoutTagsInput, Prisma.PartUncheckedCreateWithoutTagsInput>
+  connectOrCreate?: Prisma.PartCreateOrConnectWithoutTagsInput
+  connect?: Prisma.PartWhereUniqueInput
+}
+
+export type PartUpdateOneRequiredWithoutTagsNestedInput = {
+  create?: Prisma.XOR<Prisma.PartCreateWithoutTagsInput, Prisma.PartUncheckedCreateWithoutTagsInput>
+  connectOrCreate?: Prisma.PartCreateOrConnectWithoutTagsInput
+  upsert?: Prisma.PartUpsertWithoutTagsInput
+  connect?: Prisma.PartWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PartUpdateToOneWithWhereWithoutTagsInput, Prisma.PartUpdateWithoutTagsInput>, Prisma.PartUncheckedUpdateWithoutTagsInput>
 }
 
 export type PartCreateNestedOneWithoutInventoryInput = {
@@ -850,102 +861,6 @@ export type PartUpdateOneRequiredWithoutImagesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.PartUpdateToOneWithWhereWithoutImagesInput, Prisma.PartUpdateWithoutImagesInput>, Prisma.PartUncheckedUpdateWithoutImagesInput>
 }
 
-export type PartCreateWithoutCategoryInput = {
-  qrCode?: string
-  sku?: string | null
-  name: string
-  description?: string | null
-  manufacturer?: string | null
-  manufacturerPartNumber?: string | null
-  manufacturerUrl?: string | null
-  unitOfMeasure?: string
-  minimumQuantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  reorderQuantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  notes?: string | null
-  active?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  homeLocation?: Prisma.LocationCreateNestedOneWithoutHomeForPartsInput
-  inventory?: Prisma.InventoryCreateNestedManyWithoutPartInput
-  transactions?: Prisma.InventoryTransactionCreateNestedManyWithoutPartInput
-  aliases?: Prisma.PartAliasCreateNestedManyWithoutPartInput
-  suppliers?: Prisma.PartSupplierCreateNestedManyWithoutPartInput
-  images?: Prisma.PartImageCreateNestedManyWithoutPartInput
-}
-
-export type PartUncheckedCreateWithoutCategoryInput = {
-  id?: number
-  qrCode?: string
-  sku?: string | null
-  name: string
-  description?: string | null
-  manufacturer?: string | null
-  manufacturerPartNumber?: string | null
-  manufacturerUrl?: string | null
-  unitOfMeasure?: string
-  minimumQuantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  reorderQuantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  notes?: string | null
-  active?: boolean
-  homeLocationId?: number | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  inventory?: Prisma.InventoryUncheckedCreateNestedManyWithoutPartInput
-  transactions?: Prisma.InventoryTransactionUncheckedCreateNestedManyWithoutPartInput
-  aliases?: Prisma.PartAliasUncheckedCreateNestedManyWithoutPartInput
-  suppliers?: Prisma.PartSupplierUncheckedCreateNestedManyWithoutPartInput
-  images?: Prisma.PartImageUncheckedCreateNestedManyWithoutPartInput
-}
-
-export type PartCreateOrConnectWithoutCategoryInput = {
-  where: Prisma.PartWhereUniqueInput
-  create: Prisma.XOR<Prisma.PartCreateWithoutCategoryInput, Prisma.PartUncheckedCreateWithoutCategoryInput>
-}
-
-export type PartCreateManyCategoryInputEnvelope = {
-  data: Prisma.PartCreateManyCategoryInput | Prisma.PartCreateManyCategoryInput[]
-  skipDuplicates?: boolean
-}
-
-export type PartUpsertWithWhereUniqueWithoutCategoryInput = {
-  where: Prisma.PartWhereUniqueInput
-  update: Prisma.XOR<Prisma.PartUpdateWithoutCategoryInput, Prisma.PartUncheckedUpdateWithoutCategoryInput>
-  create: Prisma.XOR<Prisma.PartCreateWithoutCategoryInput, Prisma.PartUncheckedCreateWithoutCategoryInput>
-}
-
-export type PartUpdateWithWhereUniqueWithoutCategoryInput = {
-  where: Prisma.PartWhereUniqueInput
-  data: Prisma.XOR<Prisma.PartUpdateWithoutCategoryInput, Prisma.PartUncheckedUpdateWithoutCategoryInput>
-}
-
-export type PartUpdateManyWithWhereWithoutCategoryInput = {
-  where: Prisma.PartScalarWhereInput
-  data: Prisma.XOR<Prisma.PartUpdateManyMutationInput, Prisma.PartUncheckedUpdateManyWithoutCategoryInput>
-}
-
-export type PartScalarWhereInput = {
-  AND?: Prisma.PartScalarWhereInput | Prisma.PartScalarWhereInput[]
-  OR?: Prisma.PartScalarWhereInput[]
-  NOT?: Prisma.PartScalarWhereInput | Prisma.PartScalarWhereInput[]
-  id?: Prisma.IntFilter<"Part"> | number
-  qrCode?: Prisma.UuidFilter<"Part"> | string
-  sku?: Prisma.StringNullableFilter<"Part"> | string | null
-  name?: Prisma.StringFilter<"Part"> | string
-  description?: Prisma.StringNullableFilter<"Part"> | string | null
-  manufacturer?: Prisma.StringNullableFilter<"Part"> | string | null
-  manufacturerPartNumber?: Prisma.StringNullableFilter<"Part"> | string | null
-  manufacturerUrl?: Prisma.StringNullableFilter<"Part"> | string | null
-  unitOfMeasure?: Prisma.StringFilter<"Part"> | string
-  minimumQuantity?: Prisma.DecimalFilter<"Part"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  reorderQuantity?: Prisma.DecimalFilter<"Part"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  notes?: Prisma.StringNullableFilter<"Part"> | string | null
-  active?: Prisma.BoolFilter<"Part"> | boolean
-  categoryId?: Prisma.IntFilter<"Part"> | number
-  homeLocationId?: Prisma.IntNullableFilter<"Part"> | number | null
-  createdAt?: Prisma.DateTimeFilter<"Part"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"Part"> | Date | string
-}
-
 export type PartCreateWithoutHomeLocationInput = {
   qrCode?: string
   sku?: string | null
@@ -954,6 +869,8 @@ export type PartCreateWithoutHomeLocationInput = {
   manufacturer?: string | null
   manufacturerPartNumber?: string | null
   manufacturerUrl?: string | null
+  sourceUrl?: string | null
+  weightGrams?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitOfMeasure?: string
   minimumQuantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
   reorderQuantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -961,12 +878,12 @@ export type PartCreateWithoutHomeLocationInput = {
   active?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  category: Prisma.CategoryCreateNestedOneWithoutPartsInput
   inventory?: Prisma.InventoryCreateNestedManyWithoutPartInput
   transactions?: Prisma.InventoryTransactionCreateNestedManyWithoutPartInput
   aliases?: Prisma.PartAliasCreateNestedManyWithoutPartInput
   suppliers?: Prisma.PartSupplierCreateNestedManyWithoutPartInput
   images?: Prisma.PartImageCreateNestedManyWithoutPartInput
+  tags?: Prisma.PartTagCreateNestedManyWithoutPartInput
 }
 
 export type PartUncheckedCreateWithoutHomeLocationInput = {
@@ -978,12 +895,13 @@ export type PartUncheckedCreateWithoutHomeLocationInput = {
   manufacturer?: string | null
   manufacturerPartNumber?: string | null
   manufacturerUrl?: string | null
+  sourceUrl?: string | null
+  weightGrams?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitOfMeasure?: string
   minimumQuantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
   reorderQuantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: string | null
   active?: boolean
-  categoryId: number
   createdAt?: Date | string
   updatedAt?: Date | string
   inventory?: Prisma.InventoryUncheckedCreateNestedManyWithoutPartInput
@@ -991,6 +909,7 @@ export type PartUncheckedCreateWithoutHomeLocationInput = {
   aliases?: Prisma.PartAliasUncheckedCreateNestedManyWithoutPartInput
   suppliers?: Prisma.PartSupplierUncheckedCreateNestedManyWithoutPartInput
   images?: Prisma.PartImageUncheckedCreateNestedManyWithoutPartInput
+  tags?: Prisma.PartTagUncheckedCreateNestedManyWithoutPartInput
 }
 
 export type PartCreateOrConnectWithoutHomeLocationInput = {
@@ -1000,7 +919,6 @@ export type PartCreateOrConnectWithoutHomeLocationInput = {
 
 export type PartCreateManyHomeLocationInputEnvelope = {
   data: Prisma.PartCreateManyHomeLocationInput | Prisma.PartCreateManyHomeLocationInput[]
-  skipDuplicates?: boolean
 }
 
 export type PartUpsertWithWhereUniqueWithoutHomeLocationInput = {
@@ -1019,6 +937,148 @@ export type PartUpdateManyWithWhereWithoutHomeLocationInput = {
   data: Prisma.XOR<Prisma.PartUpdateManyMutationInput, Prisma.PartUncheckedUpdateManyWithoutHomeLocationInput>
 }
 
+export type PartScalarWhereInput = {
+  AND?: Prisma.PartScalarWhereInput | Prisma.PartScalarWhereInput[]
+  OR?: Prisma.PartScalarWhereInput[]
+  NOT?: Prisma.PartScalarWhereInput | Prisma.PartScalarWhereInput[]
+  id?: Prisma.IntFilter<"Part"> | number
+  qrCode?: Prisma.StringFilter<"Part"> | string
+  sku?: Prisma.StringNullableFilter<"Part"> | string | null
+  name?: Prisma.StringFilter<"Part"> | string
+  description?: Prisma.StringNullableFilter<"Part"> | string | null
+  manufacturer?: Prisma.StringNullableFilter<"Part"> | string | null
+  manufacturerPartNumber?: Prisma.StringNullableFilter<"Part"> | string | null
+  manufacturerUrl?: Prisma.StringNullableFilter<"Part"> | string | null
+  sourceUrl?: Prisma.StringNullableFilter<"Part"> | string | null
+  weightGrams?: Prisma.DecimalNullableFilter<"Part"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitOfMeasure?: Prisma.StringFilter<"Part"> | string
+  minimumQuantity?: Prisma.DecimalFilter<"Part"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  reorderQuantity?: Prisma.DecimalFilter<"Part"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  notes?: Prisma.StringNullableFilter<"Part"> | string | null
+  active?: Prisma.BoolFilter<"Part"> | boolean
+  homeLocationId?: Prisma.IntNullableFilter<"Part"> | number | null
+  createdAt?: Prisma.DateTimeFilter<"Part"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Part"> | Date | string
+}
+
+export type PartCreateWithoutTagsInput = {
+  qrCode?: string
+  sku?: string | null
+  name: string
+  description?: string | null
+  manufacturer?: string | null
+  manufacturerPartNumber?: string | null
+  manufacturerUrl?: string | null
+  sourceUrl?: string | null
+  weightGrams?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitOfMeasure?: string
+  minimumQuantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  reorderQuantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  notes?: string | null
+  active?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  homeLocation?: Prisma.LocationCreateNestedOneWithoutHomeForPartsInput
+  inventory?: Prisma.InventoryCreateNestedManyWithoutPartInput
+  transactions?: Prisma.InventoryTransactionCreateNestedManyWithoutPartInput
+  aliases?: Prisma.PartAliasCreateNestedManyWithoutPartInput
+  suppliers?: Prisma.PartSupplierCreateNestedManyWithoutPartInput
+  images?: Prisma.PartImageCreateNestedManyWithoutPartInput
+}
+
+export type PartUncheckedCreateWithoutTagsInput = {
+  id?: number
+  qrCode?: string
+  sku?: string | null
+  name: string
+  description?: string | null
+  manufacturer?: string | null
+  manufacturerPartNumber?: string | null
+  manufacturerUrl?: string | null
+  sourceUrl?: string | null
+  weightGrams?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitOfMeasure?: string
+  minimumQuantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  reorderQuantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  notes?: string | null
+  active?: boolean
+  homeLocationId?: number | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  inventory?: Prisma.InventoryUncheckedCreateNestedManyWithoutPartInput
+  transactions?: Prisma.InventoryTransactionUncheckedCreateNestedManyWithoutPartInput
+  aliases?: Prisma.PartAliasUncheckedCreateNestedManyWithoutPartInput
+  suppliers?: Prisma.PartSupplierUncheckedCreateNestedManyWithoutPartInput
+  images?: Prisma.PartImageUncheckedCreateNestedManyWithoutPartInput
+}
+
+export type PartCreateOrConnectWithoutTagsInput = {
+  where: Prisma.PartWhereUniqueInput
+  create: Prisma.XOR<Prisma.PartCreateWithoutTagsInput, Prisma.PartUncheckedCreateWithoutTagsInput>
+}
+
+export type PartUpsertWithoutTagsInput = {
+  update: Prisma.XOR<Prisma.PartUpdateWithoutTagsInput, Prisma.PartUncheckedUpdateWithoutTagsInput>
+  create: Prisma.XOR<Prisma.PartCreateWithoutTagsInput, Prisma.PartUncheckedCreateWithoutTagsInput>
+  where?: Prisma.PartWhereInput
+}
+
+export type PartUpdateToOneWithWhereWithoutTagsInput = {
+  where?: Prisma.PartWhereInput
+  data: Prisma.XOR<Prisma.PartUpdateWithoutTagsInput, Prisma.PartUncheckedUpdateWithoutTagsInput>
+}
+
+export type PartUpdateWithoutTagsInput = {
+  qrCode?: Prisma.StringFieldUpdateOperationsInput | string
+  sku?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  manufacturer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  manufacturerPartNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  manufacturerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  weightGrams?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitOfMeasure?: Prisma.StringFieldUpdateOperationsInput | string
+  minimumQuantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  reorderQuantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  homeLocation?: Prisma.LocationUpdateOneWithoutHomeForPartsNestedInput
+  inventory?: Prisma.InventoryUpdateManyWithoutPartNestedInput
+  transactions?: Prisma.InventoryTransactionUpdateManyWithoutPartNestedInput
+  aliases?: Prisma.PartAliasUpdateManyWithoutPartNestedInput
+  suppliers?: Prisma.PartSupplierUpdateManyWithoutPartNestedInput
+  images?: Prisma.PartImageUpdateManyWithoutPartNestedInput
+}
+
+export type PartUncheckedUpdateWithoutTagsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  qrCode?: Prisma.StringFieldUpdateOperationsInput | string
+  sku?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  manufacturer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  manufacturerPartNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  manufacturerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  weightGrams?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitOfMeasure?: Prisma.StringFieldUpdateOperationsInput | string
+  minimumQuantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  reorderQuantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  homeLocationId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  inventory?: Prisma.InventoryUncheckedUpdateManyWithoutPartNestedInput
+  transactions?: Prisma.InventoryTransactionUncheckedUpdateManyWithoutPartNestedInput
+  aliases?: Prisma.PartAliasUncheckedUpdateManyWithoutPartNestedInput
+  suppliers?: Prisma.PartSupplierUncheckedUpdateManyWithoutPartNestedInput
+  images?: Prisma.PartImageUncheckedUpdateManyWithoutPartNestedInput
+}
+
 export type PartCreateWithoutInventoryInput = {
   qrCode?: string
   sku?: string | null
@@ -1027,6 +1087,8 @@ export type PartCreateWithoutInventoryInput = {
   manufacturer?: string | null
   manufacturerPartNumber?: string | null
   manufacturerUrl?: string | null
+  sourceUrl?: string | null
+  weightGrams?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitOfMeasure?: string
   minimumQuantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
   reorderQuantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1034,12 +1096,12 @@ export type PartCreateWithoutInventoryInput = {
   active?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  category: Prisma.CategoryCreateNestedOneWithoutPartsInput
   homeLocation?: Prisma.LocationCreateNestedOneWithoutHomeForPartsInput
   transactions?: Prisma.InventoryTransactionCreateNestedManyWithoutPartInput
   aliases?: Prisma.PartAliasCreateNestedManyWithoutPartInput
   suppliers?: Prisma.PartSupplierCreateNestedManyWithoutPartInput
   images?: Prisma.PartImageCreateNestedManyWithoutPartInput
+  tags?: Prisma.PartTagCreateNestedManyWithoutPartInput
 }
 
 export type PartUncheckedCreateWithoutInventoryInput = {
@@ -1051,12 +1113,13 @@ export type PartUncheckedCreateWithoutInventoryInput = {
   manufacturer?: string | null
   manufacturerPartNumber?: string | null
   manufacturerUrl?: string | null
+  sourceUrl?: string | null
+  weightGrams?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitOfMeasure?: string
   minimumQuantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
   reorderQuantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: string | null
   active?: boolean
-  categoryId: number
   homeLocationId?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1064,6 +1127,7 @@ export type PartUncheckedCreateWithoutInventoryInput = {
   aliases?: Prisma.PartAliasUncheckedCreateNestedManyWithoutPartInput
   suppliers?: Prisma.PartSupplierUncheckedCreateNestedManyWithoutPartInput
   images?: Prisma.PartImageUncheckedCreateNestedManyWithoutPartInput
+  tags?: Prisma.PartTagUncheckedCreateNestedManyWithoutPartInput
 }
 
 export type PartCreateOrConnectWithoutInventoryInput = {
@@ -1090,6 +1154,8 @@ export type PartUpdateWithoutInventoryInput = {
   manufacturer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   manufacturerPartNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   manufacturerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  weightGrams?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitOfMeasure?: Prisma.StringFieldUpdateOperationsInput | string
   minimumQuantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   reorderQuantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1097,12 +1163,12 @@ export type PartUpdateWithoutInventoryInput = {
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  category?: Prisma.CategoryUpdateOneRequiredWithoutPartsNestedInput
   homeLocation?: Prisma.LocationUpdateOneWithoutHomeForPartsNestedInput
   transactions?: Prisma.InventoryTransactionUpdateManyWithoutPartNestedInput
   aliases?: Prisma.PartAliasUpdateManyWithoutPartNestedInput
   suppliers?: Prisma.PartSupplierUpdateManyWithoutPartNestedInput
   images?: Prisma.PartImageUpdateManyWithoutPartNestedInput
+  tags?: Prisma.PartTagUpdateManyWithoutPartNestedInput
 }
 
 export type PartUncheckedUpdateWithoutInventoryInput = {
@@ -1114,12 +1180,13 @@ export type PartUncheckedUpdateWithoutInventoryInput = {
   manufacturer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   manufacturerPartNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   manufacturerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  weightGrams?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitOfMeasure?: Prisma.StringFieldUpdateOperationsInput | string
   minimumQuantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   reorderQuantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  categoryId?: Prisma.IntFieldUpdateOperationsInput | number
   homeLocationId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1127,6 +1194,7 @@ export type PartUncheckedUpdateWithoutInventoryInput = {
   aliases?: Prisma.PartAliasUncheckedUpdateManyWithoutPartNestedInput
   suppliers?: Prisma.PartSupplierUncheckedUpdateManyWithoutPartNestedInput
   images?: Prisma.PartImageUncheckedUpdateManyWithoutPartNestedInput
+  tags?: Prisma.PartTagUncheckedUpdateManyWithoutPartNestedInput
 }
 
 export type PartCreateWithoutTransactionsInput = {
@@ -1137,6 +1205,8 @@ export type PartCreateWithoutTransactionsInput = {
   manufacturer?: string | null
   manufacturerPartNumber?: string | null
   manufacturerUrl?: string | null
+  sourceUrl?: string | null
+  weightGrams?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitOfMeasure?: string
   minimumQuantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
   reorderQuantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1144,12 +1214,12 @@ export type PartCreateWithoutTransactionsInput = {
   active?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  category: Prisma.CategoryCreateNestedOneWithoutPartsInput
   homeLocation?: Prisma.LocationCreateNestedOneWithoutHomeForPartsInput
   inventory?: Prisma.InventoryCreateNestedManyWithoutPartInput
   aliases?: Prisma.PartAliasCreateNestedManyWithoutPartInput
   suppliers?: Prisma.PartSupplierCreateNestedManyWithoutPartInput
   images?: Prisma.PartImageCreateNestedManyWithoutPartInput
+  tags?: Prisma.PartTagCreateNestedManyWithoutPartInput
 }
 
 export type PartUncheckedCreateWithoutTransactionsInput = {
@@ -1161,12 +1231,13 @@ export type PartUncheckedCreateWithoutTransactionsInput = {
   manufacturer?: string | null
   manufacturerPartNumber?: string | null
   manufacturerUrl?: string | null
+  sourceUrl?: string | null
+  weightGrams?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitOfMeasure?: string
   minimumQuantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
   reorderQuantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: string | null
   active?: boolean
-  categoryId: number
   homeLocationId?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1174,6 +1245,7 @@ export type PartUncheckedCreateWithoutTransactionsInput = {
   aliases?: Prisma.PartAliasUncheckedCreateNestedManyWithoutPartInput
   suppliers?: Prisma.PartSupplierUncheckedCreateNestedManyWithoutPartInput
   images?: Prisma.PartImageUncheckedCreateNestedManyWithoutPartInput
+  tags?: Prisma.PartTagUncheckedCreateNestedManyWithoutPartInput
 }
 
 export type PartCreateOrConnectWithoutTransactionsInput = {
@@ -1200,6 +1272,8 @@ export type PartUpdateWithoutTransactionsInput = {
   manufacturer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   manufacturerPartNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   manufacturerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  weightGrams?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitOfMeasure?: Prisma.StringFieldUpdateOperationsInput | string
   minimumQuantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   reorderQuantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1207,12 +1281,12 @@ export type PartUpdateWithoutTransactionsInput = {
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  category?: Prisma.CategoryUpdateOneRequiredWithoutPartsNestedInput
   homeLocation?: Prisma.LocationUpdateOneWithoutHomeForPartsNestedInput
   inventory?: Prisma.InventoryUpdateManyWithoutPartNestedInput
   aliases?: Prisma.PartAliasUpdateManyWithoutPartNestedInput
   suppliers?: Prisma.PartSupplierUpdateManyWithoutPartNestedInput
   images?: Prisma.PartImageUpdateManyWithoutPartNestedInput
+  tags?: Prisma.PartTagUpdateManyWithoutPartNestedInput
 }
 
 export type PartUncheckedUpdateWithoutTransactionsInput = {
@@ -1224,12 +1298,13 @@ export type PartUncheckedUpdateWithoutTransactionsInput = {
   manufacturer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   manufacturerPartNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   manufacturerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  weightGrams?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitOfMeasure?: Prisma.StringFieldUpdateOperationsInput | string
   minimumQuantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   reorderQuantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  categoryId?: Prisma.IntFieldUpdateOperationsInput | number
   homeLocationId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1237,6 +1312,7 @@ export type PartUncheckedUpdateWithoutTransactionsInput = {
   aliases?: Prisma.PartAliasUncheckedUpdateManyWithoutPartNestedInput
   suppliers?: Prisma.PartSupplierUncheckedUpdateManyWithoutPartNestedInput
   images?: Prisma.PartImageUncheckedUpdateManyWithoutPartNestedInput
+  tags?: Prisma.PartTagUncheckedUpdateManyWithoutPartNestedInput
 }
 
 export type PartCreateWithoutAliasesInput = {
@@ -1247,6 +1323,8 @@ export type PartCreateWithoutAliasesInput = {
   manufacturer?: string | null
   manufacturerPartNumber?: string | null
   manufacturerUrl?: string | null
+  sourceUrl?: string | null
+  weightGrams?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitOfMeasure?: string
   minimumQuantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
   reorderQuantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1254,12 +1332,12 @@ export type PartCreateWithoutAliasesInput = {
   active?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  category: Prisma.CategoryCreateNestedOneWithoutPartsInput
   homeLocation?: Prisma.LocationCreateNestedOneWithoutHomeForPartsInput
   inventory?: Prisma.InventoryCreateNestedManyWithoutPartInput
   transactions?: Prisma.InventoryTransactionCreateNestedManyWithoutPartInput
   suppliers?: Prisma.PartSupplierCreateNestedManyWithoutPartInput
   images?: Prisma.PartImageCreateNestedManyWithoutPartInput
+  tags?: Prisma.PartTagCreateNestedManyWithoutPartInput
 }
 
 export type PartUncheckedCreateWithoutAliasesInput = {
@@ -1271,12 +1349,13 @@ export type PartUncheckedCreateWithoutAliasesInput = {
   manufacturer?: string | null
   manufacturerPartNumber?: string | null
   manufacturerUrl?: string | null
+  sourceUrl?: string | null
+  weightGrams?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitOfMeasure?: string
   minimumQuantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
   reorderQuantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: string | null
   active?: boolean
-  categoryId: number
   homeLocationId?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1284,6 +1363,7 @@ export type PartUncheckedCreateWithoutAliasesInput = {
   transactions?: Prisma.InventoryTransactionUncheckedCreateNestedManyWithoutPartInput
   suppliers?: Prisma.PartSupplierUncheckedCreateNestedManyWithoutPartInput
   images?: Prisma.PartImageUncheckedCreateNestedManyWithoutPartInput
+  tags?: Prisma.PartTagUncheckedCreateNestedManyWithoutPartInput
 }
 
 export type PartCreateOrConnectWithoutAliasesInput = {
@@ -1310,6 +1390,8 @@ export type PartUpdateWithoutAliasesInput = {
   manufacturer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   manufacturerPartNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   manufacturerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  weightGrams?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitOfMeasure?: Prisma.StringFieldUpdateOperationsInput | string
   minimumQuantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   reorderQuantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1317,12 +1399,12 @@ export type PartUpdateWithoutAliasesInput = {
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  category?: Prisma.CategoryUpdateOneRequiredWithoutPartsNestedInput
   homeLocation?: Prisma.LocationUpdateOneWithoutHomeForPartsNestedInput
   inventory?: Prisma.InventoryUpdateManyWithoutPartNestedInput
   transactions?: Prisma.InventoryTransactionUpdateManyWithoutPartNestedInput
   suppliers?: Prisma.PartSupplierUpdateManyWithoutPartNestedInput
   images?: Prisma.PartImageUpdateManyWithoutPartNestedInput
+  tags?: Prisma.PartTagUpdateManyWithoutPartNestedInput
 }
 
 export type PartUncheckedUpdateWithoutAliasesInput = {
@@ -1334,12 +1416,13 @@ export type PartUncheckedUpdateWithoutAliasesInput = {
   manufacturer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   manufacturerPartNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   manufacturerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  weightGrams?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitOfMeasure?: Prisma.StringFieldUpdateOperationsInput | string
   minimumQuantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   reorderQuantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  categoryId?: Prisma.IntFieldUpdateOperationsInput | number
   homeLocationId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1347,6 +1430,7 @@ export type PartUncheckedUpdateWithoutAliasesInput = {
   transactions?: Prisma.InventoryTransactionUncheckedUpdateManyWithoutPartNestedInput
   suppliers?: Prisma.PartSupplierUncheckedUpdateManyWithoutPartNestedInput
   images?: Prisma.PartImageUncheckedUpdateManyWithoutPartNestedInput
+  tags?: Prisma.PartTagUncheckedUpdateManyWithoutPartNestedInput
 }
 
 export type PartCreateWithoutSuppliersInput = {
@@ -1357,6 +1441,8 @@ export type PartCreateWithoutSuppliersInput = {
   manufacturer?: string | null
   manufacturerPartNumber?: string | null
   manufacturerUrl?: string | null
+  sourceUrl?: string | null
+  weightGrams?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitOfMeasure?: string
   minimumQuantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
   reorderQuantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1364,12 +1450,12 @@ export type PartCreateWithoutSuppliersInput = {
   active?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  category: Prisma.CategoryCreateNestedOneWithoutPartsInput
   homeLocation?: Prisma.LocationCreateNestedOneWithoutHomeForPartsInput
   inventory?: Prisma.InventoryCreateNestedManyWithoutPartInput
   transactions?: Prisma.InventoryTransactionCreateNestedManyWithoutPartInput
   aliases?: Prisma.PartAliasCreateNestedManyWithoutPartInput
   images?: Prisma.PartImageCreateNestedManyWithoutPartInput
+  tags?: Prisma.PartTagCreateNestedManyWithoutPartInput
 }
 
 export type PartUncheckedCreateWithoutSuppliersInput = {
@@ -1381,12 +1467,13 @@ export type PartUncheckedCreateWithoutSuppliersInput = {
   manufacturer?: string | null
   manufacturerPartNumber?: string | null
   manufacturerUrl?: string | null
+  sourceUrl?: string | null
+  weightGrams?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitOfMeasure?: string
   minimumQuantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
   reorderQuantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: string | null
   active?: boolean
-  categoryId: number
   homeLocationId?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1394,6 +1481,7 @@ export type PartUncheckedCreateWithoutSuppliersInput = {
   transactions?: Prisma.InventoryTransactionUncheckedCreateNestedManyWithoutPartInput
   aliases?: Prisma.PartAliasUncheckedCreateNestedManyWithoutPartInput
   images?: Prisma.PartImageUncheckedCreateNestedManyWithoutPartInput
+  tags?: Prisma.PartTagUncheckedCreateNestedManyWithoutPartInput
 }
 
 export type PartCreateOrConnectWithoutSuppliersInput = {
@@ -1420,6 +1508,8 @@ export type PartUpdateWithoutSuppliersInput = {
   manufacturer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   manufacturerPartNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   manufacturerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  weightGrams?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitOfMeasure?: Prisma.StringFieldUpdateOperationsInput | string
   minimumQuantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   reorderQuantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1427,12 +1517,12 @@ export type PartUpdateWithoutSuppliersInput = {
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  category?: Prisma.CategoryUpdateOneRequiredWithoutPartsNestedInput
   homeLocation?: Prisma.LocationUpdateOneWithoutHomeForPartsNestedInput
   inventory?: Prisma.InventoryUpdateManyWithoutPartNestedInput
   transactions?: Prisma.InventoryTransactionUpdateManyWithoutPartNestedInput
   aliases?: Prisma.PartAliasUpdateManyWithoutPartNestedInput
   images?: Prisma.PartImageUpdateManyWithoutPartNestedInput
+  tags?: Prisma.PartTagUpdateManyWithoutPartNestedInput
 }
 
 export type PartUncheckedUpdateWithoutSuppliersInput = {
@@ -1444,12 +1534,13 @@ export type PartUncheckedUpdateWithoutSuppliersInput = {
   manufacturer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   manufacturerPartNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   manufacturerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  weightGrams?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitOfMeasure?: Prisma.StringFieldUpdateOperationsInput | string
   minimumQuantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   reorderQuantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  categoryId?: Prisma.IntFieldUpdateOperationsInput | number
   homeLocationId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1457,6 +1548,7 @@ export type PartUncheckedUpdateWithoutSuppliersInput = {
   transactions?: Prisma.InventoryTransactionUncheckedUpdateManyWithoutPartNestedInput
   aliases?: Prisma.PartAliasUncheckedUpdateManyWithoutPartNestedInput
   images?: Prisma.PartImageUncheckedUpdateManyWithoutPartNestedInput
+  tags?: Prisma.PartTagUncheckedUpdateManyWithoutPartNestedInput
 }
 
 export type PartCreateWithoutImagesInput = {
@@ -1467,6 +1559,8 @@ export type PartCreateWithoutImagesInput = {
   manufacturer?: string | null
   manufacturerPartNumber?: string | null
   manufacturerUrl?: string | null
+  sourceUrl?: string | null
+  weightGrams?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitOfMeasure?: string
   minimumQuantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
   reorderQuantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1474,12 +1568,12 @@ export type PartCreateWithoutImagesInput = {
   active?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  category: Prisma.CategoryCreateNestedOneWithoutPartsInput
   homeLocation?: Prisma.LocationCreateNestedOneWithoutHomeForPartsInput
   inventory?: Prisma.InventoryCreateNestedManyWithoutPartInput
   transactions?: Prisma.InventoryTransactionCreateNestedManyWithoutPartInput
   aliases?: Prisma.PartAliasCreateNestedManyWithoutPartInput
   suppliers?: Prisma.PartSupplierCreateNestedManyWithoutPartInput
+  tags?: Prisma.PartTagCreateNestedManyWithoutPartInput
 }
 
 export type PartUncheckedCreateWithoutImagesInput = {
@@ -1491,12 +1585,13 @@ export type PartUncheckedCreateWithoutImagesInput = {
   manufacturer?: string | null
   manufacturerPartNumber?: string | null
   manufacturerUrl?: string | null
+  sourceUrl?: string | null
+  weightGrams?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitOfMeasure?: string
   minimumQuantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
   reorderQuantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: string | null
   active?: boolean
-  categoryId: number
   homeLocationId?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1504,6 +1599,7 @@ export type PartUncheckedCreateWithoutImagesInput = {
   transactions?: Prisma.InventoryTransactionUncheckedCreateNestedManyWithoutPartInput
   aliases?: Prisma.PartAliasUncheckedCreateNestedManyWithoutPartInput
   suppliers?: Prisma.PartSupplierUncheckedCreateNestedManyWithoutPartInput
+  tags?: Prisma.PartTagUncheckedCreateNestedManyWithoutPartInput
 }
 
 export type PartCreateOrConnectWithoutImagesInput = {
@@ -1530,6 +1626,8 @@ export type PartUpdateWithoutImagesInput = {
   manufacturer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   manufacturerPartNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   manufacturerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  weightGrams?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitOfMeasure?: Prisma.StringFieldUpdateOperationsInput | string
   minimumQuantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   reorderQuantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1537,12 +1635,12 @@ export type PartUpdateWithoutImagesInput = {
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  category?: Prisma.CategoryUpdateOneRequiredWithoutPartsNestedInput
   homeLocation?: Prisma.LocationUpdateOneWithoutHomeForPartsNestedInput
   inventory?: Prisma.InventoryUpdateManyWithoutPartNestedInput
   transactions?: Prisma.InventoryTransactionUpdateManyWithoutPartNestedInput
   aliases?: Prisma.PartAliasUpdateManyWithoutPartNestedInput
   suppliers?: Prisma.PartSupplierUpdateManyWithoutPartNestedInput
+  tags?: Prisma.PartTagUpdateManyWithoutPartNestedInput
 }
 
 export type PartUncheckedUpdateWithoutImagesInput = {
@@ -1554,72 +1652,8 @@ export type PartUncheckedUpdateWithoutImagesInput = {
   manufacturer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   manufacturerPartNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   manufacturerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  unitOfMeasure?: Prisma.StringFieldUpdateOperationsInput | string
-  minimumQuantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  reorderQuantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  categoryId?: Prisma.IntFieldUpdateOperationsInput | number
-  homeLocationId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  inventory?: Prisma.InventoryUncheckedUpdateManyWithoutPartNestedInput
-  transactions?: Prisma.InventoryTransactionUncheckedUpdateManyWithoutPartNestedInput
-  aliases?: Prisma.PartAliasUncheckedUpdateManyWithoutPartNestedInput
-  suppliers?: Prisma.PartSupplierUncheckedUpdateManyWithoutPartNestedInput
-}
-
-export type PartCreateManyCategoryInput = {
-  id?: number
-  qrCode?: string
-  sku?: string | null
-  name: string
-  description?: string | null
-  manufacturer?: string | null
-  manufacturerPartNumber?: string | null
-  manufacturerUrl?: string | null
-  unitOfMeasure?: string
-  minimumQuantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  reorderQuantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  notes?: string | null
-  active?: boolean
-  homeLocationId?: number | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-}
-
-export type PartUpdateWithoutCategoryInput = {
-  qrCode?: Prisma.StringFieldUpdateOperationsInput | string
-  sku?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  manufacturer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  manufacturerPartNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  manufacturerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  unitOfMeasure?: Prisma.StringFieldUpdateOperationsInput | string
-  minimumQuantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  reorderQuantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  homeLocation?: Prisma.LocationUpdateOneWithoutHomeForPartsNestedInput
-  inventory?: Prisma.InventoryUpdateManyWithoutPartNestedInput
-  transactions?: Prisma.InventoryTransactionUpdateManyWithoutPartNestedInput
-  aliases?: Prisma.PartAliasUpdateManyWithoutPartNestedInput
-  suppliers?: Prisma.PartSupplierUpdateManyWithoutPartNestedInput
-  images?: Prisma.PartImageUpdateManyWithoutPartNestedInput
-}
-
-export type PartUncheckedUpdateWithoutCategoryInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  qrCode?: Prisma.StringFieldUpdateOperationsInput | string
-  sku?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  manufacturer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  manufacturerPartNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  manufacturerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  weightGrams?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitOfMeasure?: Prisma.StringFieldUpdateOperationsInput | string
   minimumQuantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   reorderQuantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1632,26 +1666,7 @@ export type PartUncheckedUpdateWithoutCategoryInput = {
   transactions?: Prisma.InventoryTransactionUncheckedUpdateManyWithoutPartNestedInput
   aliases?: Prisma.PartAliasUncheckedUpdateManyWithoutPartNestedInput
   suppliers?: Prisma.PartSupplierUncheckedUpdateManyWithoutPartNestedInput
-  images?: Prisma.PartImageUncheckedUpdateManyWithoutPartNestedInput
-}
-
-export type PartUncheckedUpdateManyWithoutCategoryInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  qrCode?: Prisma.StringFieldUpdateOperationsInput | string
-  sku?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  manufacturer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  manufacturerPartNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  manufacturerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  unitOfMeasure?: Prisma.StringFieldUpdateOperationsInput | string
-  minimumQuantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  reorderQuantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  homeLocationId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tags?: Prisma.PartTagUncheckedUpdateManyWithoutPartNestedInput
 }
 
 export type PartCreateManyHomeLocationInput = {
@@ -1663,12 +1678,13 @@ export type PartCreateManyHomeLocationInput = {
   manufacturer?: string | null
   manufacturerPartNumber?: string | null
   manufacturerUrl?: string | null
+  sourceUrl?: string | null
+  weightGrams?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitOfMeasure?: string
   minimumQuantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
   reorderQuantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: string | null
   active?: boolean
-  categoryId: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1681,6 +1697,8 @@ export type PartUpdateWithoutHomeLocationInput = {
   manufacturer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   manufacturerPartNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   manufacturerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  weightGrams?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitOfMeasure?: Prisma.StringFieldUpdateOperationsInput | string
   minimumQuantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   reorderQuantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1688,12 +1706,12 @@ export type PartUpdateWithoutHomeLocationInput = {
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  category?: Prisma.CategoryUpdateOneRequiredWithoutPartsNestedInput
   inventory?: Prisma.InventoryUpdateManyWithoutPartNestedInput
   transactions?: Prisma.InventoryTransactionUpdateManyWithoutPartNestedInput
   aliases?: Prisma.PartAliasUpdateManyWithoutPartNestedInput
   suppliers?: Prisma.PartSupplierUpdateManyWithoutPartNestedInput
   images?: Prisma.PartImageUpdateManyWithoutPartNestedInput
+  tags?: Prisma.PartTagUpdateManyWithoutPartNestedInput
 }
 
 export type PartUncheckedUpdateWithoutHomeLocationInput = {
@@ -1705,12 +1723,13 @@ export type PartUncheckedUpdateWithoutHomeLocationInput = {
   manufacturer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   manufacturerPartNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   manufacturerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  weightGrams?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitOfMeasure?: Prisma.StringFieldUpdateOperationsInput | string
   minimumQuantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   reorderQuantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  categoryId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   inventory?: Prisma.InventoryUncheckedUpdateManyWithoutPartNestedInput
@@ -1718,6 +1737,7 @@ export type PartUncheckedUpdateWithoutHomeLocationInput = {
   aliases?: Prisma.PartAliasUncheckedUpdateManyWithoutPartNestedInput
   suppliers?: Prisma.PartSupplierUncheckedUpdateManyWithoutPartNestedInput
   images?: Prisma.PartImageUncheckedUpdateManyWithoutPartNestedInput
+  tags?: Prisma.PartTagUncheckedUpdateManyWithoutPartNestedInput
 }
 
 export type PartUncheckedUpdateManyWithoutHomeLocationInput = {
@@ -1729,12 +1749,13 @@ export type PartUncheckedUpdateManyWithoutHomeLocationInput = {
   manufacturer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   manufacturerPartNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   manufacturerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  weightGrams?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitOfMeasure?: Prisma.StringFieldUpdateOperationsInput | string
   minimumQuantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   reorderQuantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  categoryId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1750,6 +1771,7 @@ export type PartCountOutputType = {
   aliases: number
   suppliers: number
   images: number
+  tags: number
 }
 
 export type PartCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1758,6 +1780,7 @@ export type PartCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   aliases?: boolean | PartCountOutputTypeCountAliasesArgs
   suppliers?: boolean | PartCountOutputTypeCountSuppliersArgs
   images?: boolean | PartCountOutputTypeCountImagesArgs
+  tags?: boolean | PartCountOutputTypeCountTagsArgs
 }
 
 /**
@@ -1805,6 +1828,13 @@ export type PartCountOutputTypeCountImagesArgs<ExtArgs extends runtime.Types.Ext
   where?: Prisma.PartImageWhereInput
 }
 
+/**
+ * PartCountOutputType without action
+ */
+export type PartCountOutputTypeCountTagsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PartTagWhereInput
+}
+
 
 export type PartSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1815,22 +1845,23 @@ export type PartSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   manufacturer?: boolean
   manufacturerPartNumber?: boolean
   manufacturerUrl?: boolean
+  sourceUrl?: boolean
+  weightGrams?: boolean
   unitOfMeasure?: boolean
   minimumQuantity?: boolean
   reorderQuantity?: boolean
   notes?: boolean
   active?: boolean
-  categoryId?: boolean
   homeLocationId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
   homeLocation?: boolean | Prisma.Part$homeLocationArgs<ExtArgs>
   inventory?: boolean | Prisma.Part$inventoryArgs<ExtArgs>
   transactions?: boolean | Prisma.Part$transactionsArgs<ExtArgs>
   aliases?: boolean | Prisma.Part$aliasesArgs<ExtArgs>
   suppliers?: boolean | Prisma.Part$suppliersArgs<ExtArgs>
   images?: boolean | Prisma.Part$imagesArgs<ExtArgs>
+  tags?: boolean | Prisma.Part$tagsArgs<ExtArgs>
   _count?: boolean | Prisma.PartCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["part"]>
 
@@ -1843,16 +1874,16 @@ export type PartSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   manufacturer?: boolean
   manufacturerPartNumber?: boolean
   manufacturerUrl?: boolean
+  sourceUrl?: boolean
+  weightGrams?: boolean
   unitOfMeasure?: boolean
   minimumQuantity?: boolean
   reorderQuantity?: boolean
   notes?: boolean
   active?: boolean
-  categoryId?: boolean
   homeLocationId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
   homeLocation?: boolean | Prisma.Part$homeLocationArgs<ExtArgs>
 }, ExtArgs["result"]["part"]>
 
@@ -1865,16 +1896,16 @@ export type PartSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   manufacturer?: boolean
   manufacturerPartNumber?: boolean
   manufacturerUrl?: boolean
+  sourceUrl?: boolean
+  weightGrams?: boolean
   unitOfMeasure?: boolean
   minimumQuantity?: boolean
   reorderQuantity?: boolean
   notes?: boolean
   active?: boolean
-  categoryId?: boolean
   homeLocationId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
   homeLocation?: boolean | Prisma.Part$homeLocationArgs<ExtArgs>
 }, ExtArgs["result"]["part"]>
 
@@ -1887,47 +1918,46 @@ export type PartSelectScalar = {
   manufacturer?: boolean
   manufacturerPartNumber?: boolean
   manufacturerUrl?: boolean
+  sourceUrl?: boolean
+  weightGrams?: boolean
   unitOfMeasure?: boolean
   minimumQuantity?: boolean
   reorderQuantity?: boolean
   notes?: boolean
   active?: boolean
-  categoryId?: boolean
   homeLocationId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type PartOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "qrCode" | "sku" | "name" | "description" | "manufacturer" | "manufacturerPartNumber" | "manufacturerUrl" | "unitOfMeasure" | "minimumQuantity" | "reorderQuantity" | "notes" | "active" | "categoryId" | "homeLocationId" | "createdAt" | "updatedAt", ExtArgs["result"]["part"]>
+export type PartOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "qrCode" | "sku" | "name" | "description" | "manufacturer" | "manufacturerPartNumber" | "manufacturerUrl" | "sourceUrl" | "weightGrams" | "unitOfMeasure" | "minimumQuantity" | "reorderQuantity" | "notes" | "active" | "homeLocationId" | "createdAt" | "updatedAt", ExtArgs["result"]["part"]>
 export type PartInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
   homeLocation?: boolean | Prisma.Part$homeLocationArgs<ExtArgs>
   inventory?: boolean | Prisma.Part$inventoryArgs<ExtArgs>
   transactions?: boolean | Prisma.Part$transactionsArgs<ExtArgs>
   aliases?: boolean | Prisma.Part$aliasesArgs<ExtArgs>
   suppliers?: boolean | Prisma.Part$suppliersArgs<ExtArgs>
   images?: boolean | Prisma.Part$imagesArgs<ExtArgs>
+  tags?: boolean | Prisma.Part$tagsArgs<ExtArgs>
   _count?: boolean | Prisma.PartCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type PartIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
   homeLocation?: boolean | Prisma.Part$homeLocationArgs<ExtArgs>
 }
 export type PartIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
   homeLocation?: boolean | Prisma.Part$homeLocationArgs<ExtArgs>
 }
 
 export type $PartPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Part"
   objects: {
-    category: Prisma.$CategoryPayload<ExtArgs>
     homeLocation: Prisma.$LocationPayload<ExtArgs> | null
     inventory: Prisma.$InventoryPayload<ExtArgs>[]
     transactions: Prisma.$InventoryTransactionPayload<ExtArgs>[]
     aliases: Prisma.$PartAliasPayload<ExtArgs>[]
     suppliers: Prisma.$PartSupplierPayload<ExtArgs>[]
     images: Prisma.$PartImagePayload<ExtArgs>[]
+    tags: Prisma.$PartTagPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1938,12 +1968,13 @@ export type $PartPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     manufacturer: string | null
     manufacturerPartNumber: string | null
     manufacturerUrl: string | null
+    sourceUrl: string | null
+    weightGrams: runtime.Decimal | null
     unitOfMeasure: string
     minimumQuantity: runtime.Decimal
     reorderQuantity: runtime.Decimal
     notes: string | null
     active: boolean
-    categoryId: number
     homeLocationId: number | null
     createdAt: Date
     updatedAt: Date
@@ -2341,13 +2372,13 @@ readonly fields: PartFieldRefs;
  */
 export interface Prisma__PartClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  category<T extends Prisma.CategoryDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CategoryDefaultArgs<ExtArgs>>): Prisma.Prisma__CategoryClient<runtime.Types.Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   homeLocation<T extends Prisma.Part$homeLocationArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Part$homeLocationArgs<ExtArgs>>): Prisma.Prisma__LocationClient<runtime.Types.Result.GetResult<Prisma.$LocationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   inventory<T extends Prisma.Part$inventoryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Part$inventoryArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InventoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   transactions<T extends Prisma.Part$transactionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Part$transactionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InventoryTransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   aliases<T extends Prisma.Part$aliasesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Part$aliasesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PartAliasPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   suppliers<T extends Prisma.Part$suppliersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Part$suppliersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PartSupplierPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   images<T extends Prisma.Part$imagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Part$imagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PartImagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  tags<T extends Prisma.Part$tagsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Part$tagsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PartTagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2385,12 +2416,13 @@ export interface PartFieldRefs {
   readonly manufacturer: Prisma.FieldRef<"Part", 'String'>
   readonly manufacturerPartNumber: Prisma.FieldRef<"Part", 'String'>
   readonly manufacturerUrl: Prisma.FieldRef<"Part", 'String'>
+  readonly sourceUrl: Prisma.FieldRef<"Part", 'String'>
+  readonly weightGrams: Prisma.FieldRef<"Part", 'Decimal'>
   readonly unitOfMeasure: Prisma.FieldRef<"Part", 'String'>
   readonly minimumQuantity: Prisma.FieldRef<"Part", 'Decimal'>
   readonly reorderQuantity: Prisma.FieldRef<"Part", 'Decimal'>
   readonly notes: Prisma.FieldRef<"Part", 'String'>
   readonly active: Prisma.FieldRef<"Part", 'Boolean'>
-  readonly categoryId: Prisma.FieldRef<"Part", 'Int'>
   readonly homeLocationId: Prisma.FieldRef<"Part", 'Int'>
   readonly createdAt: Prisma.FieldRef<"Part", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Part", 'DateTime'>
@@ -2628,7 +2660,6 @@ export type PartCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * The data used to create many Parts.
    */
   data: Prisma.PartCreateManyInput | Prisma.PartCreateManyInput[]
-  skipDuplicates?: boolean
 }
 
 /**
@@ -2647,7 +2678,6 @@ export type PartCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions
    * The data used to create many Parts.
    */
   data: Prisma.PartCreateManyInput | Prisma.PartCreateManyInput[]
-  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */
@@ -2931,6 +2961,30 @@ export type Part$imagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
   take?: number
   skip?: number
   distinct?: Prisma.PartImageScalarFieldEnum | Prisma.PartImageScalarFieldEnum[]
+}
+
+/**
+ * Part.tags
+ */
+export type Part$tagsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PartTag
+   */
+  select?: Prisma.PartTagSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PartTag
+   */
+  omit?: Prisma.PartTagOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PartTagInclude<ExtArgs> | null
+  where?: Prisma.PartTagWhereInput
+  orderBy?: Prisma.PartTagOrderByWithRelationInput | Prisma.PartTagOrderByWithRelationInput[]
+  cursor?: Prisma.PartTagWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PartTagScalarFieldEnum | Prisma.PartTagScalarFieldEnum[]
 }
 
 /**

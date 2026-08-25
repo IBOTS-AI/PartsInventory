@@ -8,3 +8,6 @@ build/
 uploads/
 
 /generated/prisma
+prisma/*.db
+prisma/*.db-*
+backups/

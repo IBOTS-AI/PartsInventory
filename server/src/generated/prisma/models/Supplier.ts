@@ -1293,7 +1293,6 @@ export type SupplierCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * The data used to create many Suppliers.
    */
   data: Prisma.SupplierCreateManyInput | Prisma.SupplierCreateManyInput[]
-  skipDuplicates?: boolean
 }
 
 /**
@@ -1312,7 +1311,6 @@ export type SupplierCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extens
    * The data used to create many Suppliers.
    */
   data: Prisma.SupplierCreateManyInput | Prisma.SupplierCreateManyInput[]
-  skipDuplicates?: boolean
 }
 
 /**

@@ -408,7 +408,6 @@ export type PartAliasCreateOrConnectWithoutPartInput = {
 
 export type PartAliasCreateManyPartInputEnvelope = {
   data: Prisma.PartAliasCreateManyPartInput | Prisma.PartAliasCreateManyPartInput[]
-  skipDuplicates?: boolean
 }
 
 export type PartAliasUpsertWithWhereUniqueWithoutPartInput = {
@@ -1176,7 +1175,6 @@ export type PartAliasCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Int
    * The data used to create many PartAliases.
    */
   data: Prisma.PartAliasCreateManyInput | Prisma.PartAliasCreateManyInput[]
-  skipDuplicates?: boolean
 }
 
 /**
@@ -1195,7 +1193,6 @@ export type PartAliasCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Exten
    * The data used to create many PartAliases.
    */
   data: Prisma.PartAliasCreateManyInput | Prisma.PartAliasCreateManyInput[]
-  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */

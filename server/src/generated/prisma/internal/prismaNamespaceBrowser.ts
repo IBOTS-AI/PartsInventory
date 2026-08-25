@@ -51,9 +51,10 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
-  Category: 'Category',
+  Tag: 'Tag',
   Location: 'Location',
   Part: 'Part',
+  PartTag: 'PartTag',
   Inventory: 'Inventory',
   InventoryTransaction: 'InventoryTransaction',
   PartAlias: 'PartAlias',
@@ -70,16 +71,13 @@ export type ModelName = (typeof ModelName)[keyof typeof ModelName]
  */
 
 export const TransactionIsolationLevel = runtime.makeStrictEnum({
-  ReadUncommitted: 'ReadUncommitted',
-  ReadCommitted: 'ReadCommitted',
-  RepeatableRead: 'RepeatableRead',
   Serializable: 'Serializable'
 } as const)
 
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
-export const CategoryScalarFieldEnum = {
+export const TagScalarFieldEnum = {
   id: 'id',
   name: 'name',
   code: 'code',
@@ -89,7 +87,7 @@ export const CategoryScalarFieldEnum = {
   updatedAt: 'updatedAt'
 } as const
 
-export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typeof CategoryScalarFieldEnum]
+export type TagScalarFieldEnum = (typeof TagScalarFieldEnum)[keyof typeof TagScalarFieldEnum]
 
 
 export const LocationScalarFieldEnum = {
@@ -98,8 +96,8 @@ export const LocationScalarFieldEnum = {
   code: 'code',
   locationType: 'locationType',
   description: 'description',
+  color: 'color',
   qrCode: 'qrCode',
-  active: 'active',
   parentId: 'parentId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -117,18 +115,27 @@ export const PartScalarFieldEnum = {
   manufacturer: 'manufacturer',
   manufacturerPartNumber: 'manufacturerPartNumber',
   manufacturerUrl: 'manufacturerUrl',
+  sourceUrl: 'sourceUrl',
+  weightGrams: 'weightGrams',
   unitOfMeasure: 'unitOfMeasure',
   minimumQuantity: 'minimumQuantity',
   reorderQuantity: 'reorderQuantity',
   notes: 'notes',
   active: 'active',
-  categoryId: 'categoryId',
   homeLocationId: 'homeLocationId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type PartScalarFieldEnum = (typeof PartScalarFieldEnum)[keyof typeof PartScalarFieldEnum]
+
+
+export const PartTagScalarFieldEnum = {
+  partId: 'partId',
+  tagId: 'tagId'
+} as const
+
+export type PartTagScalarFieldEnum = (typeof PartTagScalarFieldEnum)[keyof typeof PartTagScalarFieldEnum]
 
 
 export const InventoryScalarFieldEnum = {
@@ -216,7 +223,7 @@ export const LabelTemplateScalarFieldEnum = {
   id: 'id',
   name: 'name',
   target: 'target',
-  showCategory: 'showCategory',
+  showTag: 'showTag',
   showSku: 'showSku',
   showManufacturerNumber: 'showManufacturerNumber',
   showLocation: 'showLocation',
@@ -237,14 +244,6 @@ export const SortOrder = {
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
-
-
-export const QueryMode = {
-  default: 'default',
-  insensitive: 'insensitive'
-} as const
-
-export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
 
 
 export const NullsOrder = {

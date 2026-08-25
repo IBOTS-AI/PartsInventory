@@ -34,8 +34,8 @@ function assertMovementQuantity(quantity: number, type: TransactionType) {
 }
 
 function assertTransactionType(type: TransactionType) {
-  if (!['ADD', 'REMOVE', 'ADJUST', 'TRANSFER'].includes(type)) {
-    throw new InventoryMovementError('type must be ADD, REMOVE, ADJUST, or TRANSFER');
+  if (!['ADD', 'REMOVE', 'ADJUST', 'TRANSFER', 'RESERVE', 'UNRESERVE'].includes(type)) {
+    throw new InventoryMovementError('type must be ADD, REMOVE, ADJUST, TRANSFER, RESERVE, or UNRESERVE');
   }
 }
 
@@ -43,10 +43,6 @@ function assertValidId(id: number, field: string) {
   if (!Number.isInteger(id) || id <= 0) {
     throw new InventoryMovementError(`${field} must be a positive integer`);
   }
-}
-
-async function lockPart(tx: TransactionClient, partId: number) {
-  await tx.$executeRaw`SELECT pg_advisory_xact_lock(hashtext(${String(partId)}))`;
 }
 
 async function changeQuantity(
@@ -86,8 +82,6 @@ export async function recordInventoryMovement(prisma: PrismaClient, input: Inven
   }
 
   return prisma.$transaction(async (tx) => {
-    await lockPart(tx, input.partId);
-
     const [part, location, destination] = await Promise.all([
       tx.part.findUnique({ where: { id: input.partId } }),
       tx.location.findUnique({ where: { id: input.locationId } }),
@@ -97,13 +91,12 @@ export async function recordInventoryMovement(prisma: PrismaClient, input: Inven
     ]);
 
     if (!part || !part.active) throw new InventoryMovementError('part not found or inactive');
-    if (!location || !location.active)
-      throw new InventoryMovementError('location not found or inactive');
-    if (input.type === 'TRANSFER' && (!destination || !destination.active)) {
-      throw new InventoryMovementError('destination location not found or inactive');
+    if (!location) throw new InventoryMovementError('location not found');
+    if (input.type === 'TRANSFER' && !destination) {
+      throw new InventoryMovementError('destination location not found');
     }
 
-    const delta = input.type === 'REMOVE' ? -input.quantity : input.quantity;
+    const delta = ['REMOVE', 'RESERVE'].includes(input.type) ? -input.quantity : input.quantity;
     if (input.type === 'TRANSFER') {
       await changeQuantity(tx, input.partId, input.locationId, -input.quantity);
       await changeQuantity(tx, input.partId, input.destinationId!, input.quantity);
@@ -117,7 +110,7 @@ export async function recordInventoryMovement(prisma: PrismaClient, input: Inven
         locationId: input.locationId,
         destinationId: input.destinationId,
         type: input.type,
-        quantity: input.type === 'REMOVE' ? -input.quantity : input.quantity,
+        quantity: ['REMOVE', 'RESERVE'].includes(input.type) ? -input.quantity : input.quantity,
         notes: input.notes,
         operatorName: input.operatorName,
       },

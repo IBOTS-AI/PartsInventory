@@ -38,7 +38,7 @@ export type LabelTemplateMinAggregateOutputType = {
   id: number | null
   name: string | null
   target: string | null
-  showCategory: boolean | null
+  showTag: boolean | null
   showSku: boolean | null
   showManufacturerNumber: boolean | null
   showLocation: boolean | null
@@ -54,7 +54,7 @@ export type LabelTemplateMaxAggregateOutputType = {
   id: number | null
   name: string | null
   target: string | null
-  showCategory: boolean | null
+  showTag: boolean | null
   showSku: boolean | null
   showManufacturerNumber: boolean | null
   showLocation: boolean | null
@@ -70,7 +70,7 @@ export type LabelTemplateCountAggregateOutputType = {
   id: number
   name: number
   target: number
-  showCategory: number
+  showTag: number
   showSku: number
   showManufacturerNumber: number
   showLocation: number
@@ -96,7 +96,7 @@ export type LabelTemplateMinAggregateInputType = {
   id?: true
   name?: true
   target?: true
-  showCategory?: true
+  showTag?: true
   showSku?: true
   showManufacturerNumber?: true
   showLocation?: true
@@ -112,7 +112,7 @@ export type LabelTemplateMaxAggregateInputType = {
   id?: true
   name?: true
   target?: true
-  showCategory?: true
+  showTag?: true
   showSku?: true
   showManufacturerNumber?: true
   showLocation?: true
@@ -128,7 +128,7 @@ export type LabelTemplateCountAggregateInputType = {
   id?: true
   name?: true
   target?: true
-  showCategory?: true
+  showTag?: true
   showSku?: true
   showManufacturerNumber?: true
   showLocation?: true
@@ -231,7 +231,7 @@ export type LabelTemplateGroupByOutputType = {
   id: number
   name: string
   target: string
-  showCategory: boolean
+  showTag: boolean
   showSku: boolean
   showManufacturerNumber: boolean
   showLocation: boolean
@@ -270,7 +270,7 @@ export type LabelTemplateWhereInput = {
   id?: Prisma.IntFilter<"LabelTemplate"> | number
   name?: Prisma.StringFilter<"LabelTemplate"> | string
   target?: Prisma.StringFilter<"LabelTemplate"> | string
-  showCategory?: Prisma.BoolFilter<"LabelTemplate"> | boolean
+  showTag?: Prisma.BoolFilter<"LabelTemplate"> | boolean
   showSku?: Prisma.BoolFilter<"LabelTemplate"> | boolean
   showManufacturerNumber?: Prisma.BoolFilter<"LabelTemplate"> | boolean
   showLocation?: Prisma.BoolFilter<"LabelTemplate"> | boolean
@@ -286,7 +286,7 @@ export type LabelTemplateOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   target?: Prisma.SortOrder
-  showCategory?: Prisma.SortOrder
+  showTag?: Prisma.SortOrder
   showSku?: Prisma.SortOrder
   showManufacturerNumber?: Prisma.SortOrder
   showLocation?: Prisma.SortOrder
@@ -305,7 +305,7 @@ export type LabelTemplateWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.LabelTemplateWhereInput[]
   NOT?: Prisma.LabelTemplateWhereInput | Prisma.LabelTemplateWhereInput[]
   target?: Prisma.StringFilter<"LabelTemplate"> | string
-  showCategory?: Prisma.BoolFilter<"LabelTemplate"> | boolean
+  showTag?: Prisma.BoolFilter<"LabelTemplate"> | boolean
   showSku?: Prisma.BoolFilter<"LabelTemplate"> | boolean
   showManufacturerNumber?: Prisma.BoolFilter<"LabelTemplate"> | boolean
   showLocation?: Prisma.BoolFilter<"LabelTemplate"> | boolean
@@ -321,7 +321,7 @@ export type LabelTemplateOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   target?: Prisma.SortOrder
-  showCategory?: Prisma.SortOrder
+  showTag?: Prisma.SortOrder
   showSku?: Prisma.SortOrder
   showManufacturerNumber?: Prisma.SortOrder
   showLocation?: Prisma.SortOrder
@@ -345,7 +345,7 @@ export type LabelTemplateScalarWhereWithAggregatesInput = {
   id?: Prisma.IntWithAggregatesFilter<"LabelTemplate"> | number
   name?: Prisma.StringWithAggregatesFilter<"LabelTemplate"> | string
   target?: Prisma.StringWithAggregatesFilter<"LabelTemplate"> | string
-  showCategory?: Prisma.BoolWithAggregatesFilter<"LabelTemplate"> | boolean
+  showTag?: Prisma.BoolWithAggregatesFilter<"LabelTemplate"> | boolean
   showSku?: Prisma.BoolWithAggregatesFilter<"LabelTemplate"> | boolean
   showManufacturerNumber?: Prisma.BoolWithAggregatesFilter<"LabelTemplate"> | boolean
   showLocation?: Prisma.BoolWithAggregatesFilter<"LabelTemplate"> | boolean
@@ -360,7 +360,7 @@ export type LabelTemplateScalarWhereWithAggregatesInput = {
 export type LabelTemplateCreateInput = {
   name: string
   target?: string
-  showCategory?: boolean
+  showTag?: boolean
   showSku?: boolean
   showManufacturerNumber?: boolean
   showLocation?: boolean
@@ -376,7 +376,7 @@ export type LabelTemplateUncheckedCreateInput = {
   id?: number
   name: string
   target?: string
-  showCategory?: boolean
+  showTag?: boolean
   showSku?: boolean
   showManufacturerNumber?: boolean
   showLocation?: boolean
@@ -391,7 +391,7 @@ export type LabelTemplateUncheckedCreateInput = {
 export type LabelTemplateUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   target?: Prisma.StringFieldUpdateOperationsInput | string
-  showCategory?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  showTag?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showSku?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showManufacturerNumber?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showLocation?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -407,7 +407,7 @@ export type LabelTemplateUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   target?: Prisma.StringFieldUpdateOperationsInput | string
-  showCategory?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  showTag?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showSku?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showManufacturerNumber?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showLocation?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -423,7 +423,7 @@ export type LabelTemplateCreateManyInput = {
   id?: number
   name: string
   target?: string
-  showCategory?: boolean
+  showTag?: boolean
   showSku?: boolean
   showManufacturerNumber?: boolean
   showLocation?: boolean
@@ -438,7 +438,7 @@ export type LabelTemplateCreateManyInput = {
 export type LabelTemplateUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   target?: Prisma.StringFieldUpdateOperationsInput | string
-  showCategory?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  showTag?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showSku?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showManufacturerNumber?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showLocation?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -454,7 +454,7 @@ export type LabelTemplateUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   target?: Prisma.StringFieldUpdateOperationsInput | string
-  showCategory?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  showTag?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showSku?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showManufacturerNumber?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showLocation?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -470,7 +470,7 @@ export type LabelTemplateCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   target?: Prisma.SortOrder
-  showCategory?: Prisma.SortOrder
+  showTag?: Prisma.SortOrder
   showSku?: Prisma.SortOrder
   showManufacturerNumber?: Prisma.SortOrder
   showLocation?: Prisma.SortOrder
@@ -490,7 +490,7 @@ export type LabelTemplateMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   target?: Prisma.SortOrder
-  showCategory?: Prisma.SortOrder
+  showTag?: Prisma.SortOrder
   showSku?: Prisma.SortOrder
   showManufacturerNumber?: Prisma.SortOrder
   showLocation?: Prisma.SortOrder
@@ -506,7 +506,7 @@ export type LabelTemplateMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   target?: Prisma.SortOrder
-  showCategory?: Prisma.SortOrder
+  showTag?: Prisma.SortOrder
   showSku?: Prisma.SortOrder
   showManufacturerNumber?: Prisma.SortOrder
   showLocation?: Prisma.SortOrder
@@ -528,7 +528,7 @@ export type LabelTemplateSelect<ExtArgs extends runtime.Types.Extensions.Interna
   id?: boolean
   name?: boolean
   target?: boolean
-  showCategory?: boolean
+  showTag?: boolean
   showSku?: boolean
   showManufacturerNumber?: boolean
   showLocation?: boolean
@@ -544,7 +544,7 @@ export type LabelTemplateSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   id?: boolean
   name?: boolean
   target?: boolean
-  showCategory?: boolean
+  showTag?: boolean
   showSku?: boolean
   showManufacturerNumber?: boolean
   showLocation?: boolean
@@ -560,7 +560,7 @@ export type LabelTemplateSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   id?: boolean
   name?: boolean
   target?: boolean
-  showCategory?: boolean
+  showTag?: boolean
   showSku?: boolean
   showManufacturerNumber?: boolean
   showLocation?: boolean
@@ -576,7 +576,7 @@ export type LabelTemplateSelectScalar = {
   id?: boolean
   name?: boolean
   target?: boolean
-  showCategory?: boolean
+  showTag?: boolean
   showSku?: boolean
   showManufacturerNumber?: boolean
   showLocation?: boolean
@@ -588,7 +588,7 @@ export type LabelTemplateSelectScalar = {
   updatedAt?: boolean
 }
 
-export type LabelTemplateOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "target" | "showCategory" | "showSku" | "showManufacturerNumber" | "showLocation" | "showContents" | "showQrCode" | "accentColor" | "active" | "createdAt" | "updatedAt", ExtArgs["result"]["labelTemplate"]>
+export type LabelTemplateOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "target" | "showTag" | "showSku" | "showManufacturerNumber" | "showLocation" | "showContents" | "showQrCode" | "accentColor" | "active" | "createdAt" | "updatedAt", ExtArgs["result"]["labelTemplate"]>
 
 export type $LabelTemplatePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "LabelTemplate"
@@ -597,7 +597,7 @@ export type $LabelTemplatePayload<ExtArgs extends runtime.Types.Extensions.Inter
     id: number
     name: string
     target: string
-    showCategory: boolean
+    showTag: boolean
     showSku: boolean
     showManufacturerNumber: boolean
     showLocation: boolean
@@ -1033,7 +1033,7 @@ export interface LabelTemplateFieldRefs {
   readonly id: Prisma.FieldRef<"LabelTemplate", 'Int'>
   readonly name: Prisma.FieldRef<"LabelTemplate", 'String'>
   readonly target: Prisma.FieldRef<"LabelTemplate", 'String'>
-  readonly showCategory: Prisma.FieldRef<"LabelTemplate", 'Boolean'>
+  readonly showTag: Prisma.FieldRef<"LabelTemplate", 'Boolean'>
   readonly showSku: Prisma.FieldRef<"LabelTemplate", 'Boolean'>
   readonly showManufacturerNumber: Prisma.FieldRef<"LabelTemplate", 'Boolean'>
   readonly showLocation: Prisma.FieldRef<"LabelTemplate", 'Boolean'>
@@ -1253,7 +1253,6 @@ export type LabelTemplateCreateManyArgs<ExtArgs extends runtime.Types.Extensions
    * The data used to create many LabelTemplates.
    */
   data: Prisma.LabelTemplateCreateManyInput | Prisma.LabelTemplateCreateManyInput[]
-  skipDuplicates?: boolean
 }
 
 /**
@@ -1272,7 +1271,6 @@ export type LabelTemplateCreateManyAndReturnArgs<ExtArgs extends runtime.Types.E
    * The data used to create many LabelTemplates.
    */
   data: Prisma.LabelTemplateCreateManyInput | Prisma.LabelTemplateCreateManyInput[]
-  skipDuplicates?: boolean
 }
 
 /**

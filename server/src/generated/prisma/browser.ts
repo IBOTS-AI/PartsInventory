@@ -18,10 +18,10 @@ export { Prisma }
 export * as $Enums from './enums.js'
 export * from './enums.js';
 /**
- * Model Category
+ * Model Tag
  * 
  */
-export type Category = Prisma.CategoryModel
+export type Tag = Prisma.TagModel
 /**
  * Model Location
  * 
@@ -32,6 +32,11 @@ export type Location = Prisma.LocationModel
  * 
  */
 export type Part = Prisma.PartModel
+/**
+ * Model PartTag
+ * 
+ */
+export type PartTag = Prisma.PartTagModel
 /**
  * Model Inventory
  * 
