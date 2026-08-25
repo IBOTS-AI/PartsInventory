@@ -1,12 +1,9 @@
 {
   "name": "ibots-inventory-app",
   "version": "1.0.0",
-  "description": "Self-hosted inventory system for FRC Team 2370",
+  "description": "Self-hosted inventory system for FRC teams",
   "private": true,
-  "workspaces": [
-    "client",
-    "server"
-  ],
+  "workspaces": ["client", "server"],
   "scripts": {
     "dev": "concurrently -n client,server -c blue,green \"npm run dev -w client\" \"npm run dev -w server\"",
     "build": "npm run build -w client && npm run build -w server",
@@ -14,7 +11,7 @@
     "format": "npm run format -w client && npm run format -w server",
     "test": "npm test -w server"
   },
-  "keywords": [],
+  "keywords": ["frc", "inventory", "robotics"],
   "author": "",
   "license": "ISC",
   "devDependencies": {
@@ -23,9 +20,8 @@
     "tsx": "^4.23.12"
   },
   "dependencies": {
-    "@prisma/adapter-pg": "^7.9.1",
-    "@prisma/client": "^7.9.1",
-    "pg": "^8.23.0"
+    "@prisma/adapter-better-sqlite3": "^7.9.1",
+    "@prisma/client": "^7.9.1"
   },
   "allowScripts": {
     "@prisma/engines@7.9.1": true,
