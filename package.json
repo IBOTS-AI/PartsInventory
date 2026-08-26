@@ -20,7 +20,7 @@
     "db:init": "npm run db:push && npm run db:generate && npm run db:seed",
     "db:backup": "node scripts/sqlite-backup.mjs",
     "db:restore": "node scripts/sqlite-restore.mjs",
-    "service:install": "node scripts/service-install.mjs",
+    "service:install": "npm run db:init && npm run build && node scripts/service-install.mjs",
     "service:uninstall": "node scripts/service-uninstall.mjs",
     "release:win": "npm run build && electron-builder --win",
     "release:win:unsigned": "npm run build && electron-builder --win --config ./electron-builder.unsigned.yml",

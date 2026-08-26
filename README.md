@@ -56,7 +56,7 @@ When built with `npm run build`, the Express backend automatically serves the co
 To run the app automatically on system boot:
 
 1. Open PowerShell or Command Prompt **as Administrator**.
-2. Run `npm run service:install`.
+2. Run `npm run service:install` (this automatically initializes the DB, builds client & server, and installs the Windows service).
 3. The server will run in the background as the `IBOTS Inventory Server` service and start on boot.
 4. To remove the service later, run `npm run service:uninstall` from an Admin terminal.
 
