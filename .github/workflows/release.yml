@@ -34,7 +34,9 @@ jobs:
         run: npm run build
 
       - name: Package Windows installer
-        run: npx electron-builder --win --config ./electron-builder.unsigned.yml
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: npx electron-builder --win --publish never --config ./electron-builder.unsigned.yml
 
       - name: Upload installer as workflow artifact
         uses: actions/upload-artifact@v4
