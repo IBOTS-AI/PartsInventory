@@ -40,24 +40,39 @@ function prepareUserData() {
 
 function startBackendServer(userData) {
   return new Promise((resolve, reject) => {
+    const logFile = path.join(app.getPath('userData'), 'server-startup.log');
+    fs.writeFileSync(logFile, `[${new Date().toISOString()}] Starting backend server attempt...\n`);
+
+    function log(msg) {
+      const line = `[${new Date().toISOString()}] ${msg}\n`;
+      fs.appendFileSync(logFile, line);
+      console.log(msg);
+    }
+
     const serverScriptCandidates = [
       path.join(app.getAppPath(), 'server', 'dist', 'index.js'),
       path.join(__dirname, '..', 'server', 'dist', 'index.js'),
       path.join(process.cwd(), 'server', 'dist', 'index.js'),
     ];
 
+    log(`App path: ${app.getAppPath()}`);
+    log(`__dirname: ${__dirname}`);
+    log(`process.cwd(): ${process.cwd()}`);
+
     const serverScript = serverScriptCandidates.find((p) => fs.existsSync(p));
 
     if (!serverScript) {
       const errMsg = `Could not find server script. Searched:\n${serverScriptCandidates.join('\n')}`;
-      console.error(errMsg);
+      log(errMsg);
       reject(new Error(errMsg));
       return;
     }
 
-    console.log(`Starting embedded backend server from ${serverScript}...`);
+    log(`Starting embedded backend server from ${serverScript}...`);
 
     const formattedDbUrl = `file:${userData.dbPath.replace(/\\/g, '/')}`;
+    log(`Database URL: ${formattedDbUrl}`);
+    log(`Uploads Dir: ${userData.uploadsDir}`);
 
     serverProcess = utilityProcess.fork(serverScript, [], {
       stdio: 'pipe',
@@ -71,21 +86,22 @@ function startBackendServer(userData) {
 
     if (serverProcess.stdout) {
       serverProcess.stdout.on('data', (data) => {
-        console.log(`[Server STDOUT] ${data.toString()}`);
+        log(`[Server STDOUT] ${data.toString().trim()}`);
       });
     }
 
     if (serverProcess.stderr) {
       serverProcess.stderr.on('data', (data) => {
-        console.error(`[Server STDERR] ${data.toString()}`);
+        log(`[Server STDERR] ${data.toString().trim()}`);
       });
     }
 
     let resolved = false;
 
     serverProcess.on('message', (msg) => {
+      log(`[Server IPC Message] ${JSON.stringify(msg)}`);
       if (msg && msg.type === 'SERVER_STARTED') {
-        console.log(`Embedded server started on port ${msg.port}`);
+        log(`Embedded server started successfully on port ${msg.port}`);
         if (!resolved) {
           resolved = true;
           resolve(msg.port);
@@ -94,17 +110,17 @@ function startBackendServer(userData) {
     });
 
     serverProcess.on('exit', (code) => {
-      console.warn(`Server process exited with code ${code}`);
+      log(`Server process exited with code ${code}`);
       if (!resolved) {
         resolved = true;
-        reject(new Error(`Server process exited unexpectedly with code ${code}`));
+        reject(new Error(`Server process exited unexpectedly with code ${code}. Check ${logFile} for details.`));
       }
     });
 
     setTimeout(() => {
       if (!resolved) {
         resolved = true;
-        console.warn('Server startup timeout reached, attempting fallback to port 4000');
+        log('Server startup timeout (10s) reached');
         resolve(4000);
       }
     }, 10000);

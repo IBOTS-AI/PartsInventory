@@ -39,7 +39,7 @@ if (clientDist) {
   console.log(`Serving static client files from: ${clientDist}`);
   app.use(express.static(clientDist));
 
-  app.get('*', (req, res, next) => {
+  app.use((req, res, next) => {
     if (req.path.startsWith('/api') || req.path.startsWith('/uploads')) {
       return next();
     }
