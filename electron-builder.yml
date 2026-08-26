@@ -4,6 +4,11 @@ copyright: Copyright © 2026
 files:
   - installer/**
   - package.json
+  - server/dist/**
+  - client/dist/**
+  - prisma/ibots.db
+  - prisma/schema.prisma
+  - node_modules/**
 win:
   target: nsis
 nsis:

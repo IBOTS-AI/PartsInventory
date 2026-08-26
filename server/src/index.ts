@@ -11,11 +11,12 @@ import { inventoryMutationsRouter } from './routes/inventory-mutations.js';
 import { partImagesRouter } from './routes/part-images.js';
 
 const app = express();
-const port = process.env.PORT ? Number(process.env.PORT) : 80;
+const initialPort = process.env.PORT ? Number(process.env.PORT) : 80;
+const uploadBaseDir = path.resolve(process.env.IMAGE_UPLOAD_DIR || path.resolve(process.cwd(), 'uploads'));
 
 app.use(cors());
 app.use(express.json());
-app.use('/uploads', express.static(path.resolve(process.cwd(), 'uploads')));
+app.use('/uploads', express.static(uploadBaseDir));
 
 app.use('/api/health', healthRouter);
 app.use('/api', inventoryRouter);
@@ -48,6 +49,27 @@ if (clientDist) {
 
 app.use(errorHandler);
 
-app.listen(port, () => {
-  console.log(`IBOTS Inventory API listening on port ${port}`);
-});
+function listenOnPort(portToTry: number) {
+  const server = app.listen(portToTry, () => {
+    const address = server.address();
+    const activePort = typeof address === 'object' && address ? address.port : portToTry;
+    console.log(`IBOTS Inventory API listening on port ${activePort}`);
+    if (typeof process.send === 'function') {
+      process.send({ type: 'SERVER_STARTED', port: activePort });
+    }
+  });
+
+  server.on('error', (err: any) => {
+    if ((err.code === 'EADDRINUSE' || err.code === 'EACCES') && portToTry !== 4000) {
+      console.warn(`Port ${portToTry} unavailable (${err.code}). Trying fallback port 4000...`);
+      listenOnPort(4000);
+    } else if ((err.code === 'EADDRINUSE' || err.code === 'EACCES') && portToTry === 4000) {
+      console.warn(`Port 4000 unavailable (${err.code}). Trying dynamic port 0...`);
+      listenOnPort(0);
+    } else {
+      console.error('Server failed to start:', err);
+    }
+  });
+}
+
+listenOnPort(initialPort);
