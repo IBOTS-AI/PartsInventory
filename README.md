@@ -46,6 +46,19 @@ prisma/   Prisma schema and local SQLite database file
 - `npm run db:init` — create/update SQLite schema, generate Prisma client, and seed defaults
 - `npm run db:backup` — create a timestamped SQLite backup in `backups/`
 - `npm run db:restore -- <backup-file>` — restore SQLite database from a backup file
+- `npm run service:install` — install and start the server as an automatic Windows Service (requires Admin prompt)
+- `npm run service:uninstall` — stop and remove the background Windows Service (requires Admin prompt)
+
+## Production & Windows Service Deployment
+
+When built with `npm run build`, the Express backend automatically serves the compiled static client (`client/dist`) and handles API routes on port 80. Any device on the local network can access the web interface directly via `http://<server-ip>`.
+
+To run the app automatically on system boot:
+
+1. Open PowerShell or Command Prompt **as Administrator**.
+2. Run `npm run service:install`.
+3. The server will run in the background as the `IBOTS Inventory Server` service and start on boot.
+4. To remove the service later, run `npm run service:uninstall` from an Admin terminal.
 
 ## Database
 
