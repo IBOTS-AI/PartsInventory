@@ -399,6 +399,7 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 export const ModelName = {
   Tag: 'Tag',
   Location: 'Location',
+  Container: 'Container',
   Part: 'Part',
   PartTag: 'PartTag',
   Inventory: 'Inventory',
@@ -423,7 +424,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "tag" | "location" | "part" | "partTag" | "inventory" | "inventoryTransaction" | "partAlias" | "supplier" | "partSupplier" | "partImage" | "labelTemplate"
+    modelProps: "tag" | "location" | "container" | "part" | "partTag" | "inventory" | "inventoryTransaction" | "partAlias" | "supplier" | "partSupplier" | "partImage" | "labelTemplate"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -572,6 +573,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.LocationCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.LocationCountAggregateOutputType> | number
+        }
+      }
+    }
+    Container: {
+      payload: Prisma.$ContainerPayload<ExtArgs>
+      fields: Prisma.ContainerFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ContainerFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContainerPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ContainerFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContainerPayload>
+        }
+        findFirst: {
+          args: Prisma.ContainerFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContainerPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ContainerFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContainerPayload>
+        }
+        findMany: {
+          args: Prisma.ContainerFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContainerPayload>[]
+        }
+        create: {
+          args: Prisma.ContainerCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContainerPayload>
+        }
+        createMany: {
+          args: Prisma.ContainerCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ContainerCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContainerPayload>[]
+        }
+        delete: {
+          args: Prisma.ContainerDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContainerPayload>
+        }
+        update: {
+          args: Prisma.ContainerUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContainerPayload>
+        }
+        deleteMany: {
+          args: Prisma.ContainerDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ContainerUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ContainerUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContainerPayload>[]
+        }
+        upsert: {
+          args: Prisma.ContainerUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContainerPayload>
+        }
+        aggregate: {
+          args: Prisma.ContainerAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateContainer>
+        }
+        groupBy: {
+          args: Prisma.ContainerGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ContainerGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ContainerCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ContainerCountAggregateOutputType> | number
         }
       }
     }
@@ -1306,6 +1381,17 @@ export const LocationScalarFieldEnum = {
 export type LocationScalarFieldEnum = (typeof LocationScalarFieldEnum)[keyof typeof LocationScalarFieldEnum]
 
 
+export const ContainerScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  active: 'active',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ContainerScalarFieldEnum = (typeof ContainerScalarFieldEnum)[keyof typeof ContainerScalarFieldEnum]
+
+
 export const PartScalarFieldEnum = {
   id: 'id',
   qrCode: 'qrCode',
@@ -1430,6 +1516,7 @@ export const LabelTemplateScalarFieldEnum = {
   showContents: 'showContents',
   showQrCode: 'showQrCode',
   accentColor: 'accentColor',
+  borderThickness: 'borderThickness',
   active: 'active',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -1482,16 +1569,16 @@ export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel
 
 
 /**
- * Reference to a field of type 'Decimal'
+ * Reference to a field of type 'Boolean'
  */
-export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
+export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
 /**
- * Reference to a field of type 'Boolean'
+ * Reference to a field of type 'Decimal'
  */
-export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
     
 
 
@@ -1661,6 +1748,7 @@ export type PrismaClientOptions = PrismaClientOptionsWithAccelerateUrl | PrismaC
 export type GlobalOmitConfig = {
   tag?: Prisma.TagOmit
   location?: Prisma.LocationOmit
+  container?: Prisma.ContainerOmit
   part?: Prisma.PartOmit
   partTag?: Prisma.PartTagOmit
   inventory?: Prisma.InventoryOmit

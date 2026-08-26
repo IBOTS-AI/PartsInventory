@@ -400,13 +400,13 @@ h1 {
 }
 .detail-image { width: 100%; max-height: 220px; overflow: hidden; border-radius: 6px; background: #eef0ec; text-align: center; }
 .detail-image img { width: 100%; height: 220px; object-fit: contain; }
-.location-browser-row { display: flex !important; justify-content: space-between !important; align-items: center !important; width: 100%; padding: 13px 4px !important; color: var(--ink) !important; text-align: left; text-transform: none !important; }
+.location-browser-row { display: flex !important; justify-content: flex-start !important; align-items: center !important; width: 100%; padding: 13px 4px !important; color: var(--ink) !important; text-align: left; text-transform: none !important; }
 .location-color-bar { flex: 0 0 48px; align-self: stretch; min-height: 42px; margin-right: 16px; border-radius: 4px; }
 .location-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
 .location-grid .location-add-row { grid-column: 1 / -1; }
-.location-grid .location-browser-row { min-width: 0; padding: 12px !important; border: 1px solid var(--line); border-radius: 5px; }
+.location-grid .location-browser-row { min-width: 0; padding: 12px !important; border: 1px solid var(--line); border-radius: 5px; display: grid !important; grid-template-columns: 40px minmax(0, 1fr) auto; align-items: center; }
 .location-grid .location-browser-row .location-color-bar { flex: 0 0 40px; min-height: 38px; margin-right: 8px; border-radius: 3px; }
-.location-grid .location-browser-row > button:first-of-type { min-width: 0; padding: 2px 0; }
+.location-grid .location-browser-row > button:first-of-type { min-width: 0; padding: 2px 0; justify-self: start; width: 100%; }
 .location-grid .location-browser-row > button:first-of-type > div { min-width: 0; }
 .location-grid .location-browser-row > button:first-of-type p { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .location-grid .location-actions { align-items: stretch; min-width: 120px; }
@@ -424,13 +424,33 @@ h1 {
   .app-shell.kiosk-mode .part-row { padding: 6px; }
 }
 @media (min-width: 601px) {
-  .storage-locations-dialog .MuiDialog-paper { width: min(780px, calc(100vw - 48px)); max-width: none; }
+  .storage-locations-dialog .MuiDialog-paper { width: min(980px, calc(100vw - 48px)); max-width: none; }
 }
 .edit-location-dialog input[type="color"] { width: 75px !important; min-width: 75px !important; height: 75px !important; padding: 0 !important; box-sizing: border-box; }
 .create-dialog .location-color-input input[type="color"] { width: 75px !important; min-width: 75px !important; height: 75px !important; padding: 0 !important; box-sizing: border-box; }
+.edit-location-controls {
+  align-items: flex-start !important;
+}
+.edit-location-controls .MuiTextField-root,
+.edit-location-controls .MuiSelect-root {
+  min-height: 56px;
+}
+.edit-location-color .MuiInputBase-root {
+  min-height: 56px;
+  height: 56px;
+}
+.edit-location-color input[type="color"] {
+  width: 100% !important;
+  min-width: 0 !important;
+  height: 100% !important;
+  padding: 8px !important;
+  border-radius: 6px;
+}
 .location-browser-row > div { text-align: left; }
 .location-browser-row svg { color: var(--coral); }
-.location-browser-row > button:first-child { flex: 1; justify-content: space-between; color: var(--ink) !important; text-transform: none; text-align: left; }
+.location-browser-row > button:first-child { flex: 1; justify-content: flex-start; color: var(--ink) !important; text-transform: none; text-align: left; }
+.location-browser-row > button:first-child > div { width: 100%; display: flex; flex-direction: column; align-items: flex-start; }
+.location-browser-row > button:first-child * { text-align: left !important; width: 100%; }
 .location-add-row { justify-content: flex-start !important; padding: 12px 4px !important; color: var(--blue) !important; text-transform: none !important; }
 .detail-grid {
   display: grid;

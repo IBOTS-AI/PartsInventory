@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Self-hosted inventory system for FRC Team 2370",
   "private": true,
+  "main": "installer/main.js",
   "workspaces": [
     "client",
     "server"
@@ -18,13 +19,18 @@
     "db:seed": "prisma db seed",
     "db:init": "npm run db:push && npm run db:generate && npm run db:seed",
     "db:backup": "node scripts/sqlite-backup.mjs",
-    "db:restore": "node scripts/sqlite-restore.mjs"
+    "db:restore": "node scripts/sqlite-restore.mjs",
+    "release:win": "npm run build && electron-builder --win",
+    "release:win:unsigned": "npm run build && electron-builder --win --config ./electron-builder.unsigned.yml",
+    "version:patch": "npm version patch --no-git-tag-version"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "concurrently": "^9.1.0",
+    "electron": "^33.0.0",
+    "electron-builder": "^24.13.3",
     "prisma": "^7.9.1",
     "tsx": "^4.23.12"
   },

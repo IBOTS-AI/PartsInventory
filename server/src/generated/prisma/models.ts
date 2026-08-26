@@ -10,6 +10,7 @@
  */
 export type * from './models/Tag.js'
 export type * from './models/Location.js'
+export type * from './models/Container.js'
 export type * from './models/Part.js'
 export type * from './models/PartTag.js'
 export type * from './models/Inventory.js'

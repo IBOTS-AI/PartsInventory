@@ -28,10 +28,12 @@ export type AggregateLabelTemplate = {
 
 export type LabelTemplateAvgAggregateOutputType = {
   id: number | null
+  borderThickness: number | null
 }
 
 export type LabelTemplateSumAggregateOutputType = {
   id: number | null
+  borderThickness: number | null
 }
 
 export type LabelTemplateMinAggregateOutputType = {
@@ -45,6 +47,7 @@ export type LabelTemplateMinAggregateOutputType = {
   showContents: boolean | null
   showQrCode: boolean | null
   accentColor: string | null
+  borderThickness: number | null
   active: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -61,6 +64,7 @@ export type LabelTemplateMaxAggregateOutputType = {
   showContents: boolean | null
   showQrCode: boolean | null
   accentColor: string | null
+  borderThickness: number | null
   active: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -77,6 +81,7 @@ export type LabelTemplateCountAggregateOutputType = {
   showContents: number
   showQrCode: number
   accentColor: number
+  borderThickness: number
   active: number
   createdAt: number
   updatedAt: number
@@ -86,10 +91,12 @@ export type LabelTemplateCountAggregateOutputType = {
 
 export type LabelTemplateAvgAggregateInputType = {
   id?: true
+  borderThickness?: true
 }
 
 export type LabelTemplateSumAggregateInputType = {
   id?: true
+  borderThickness?: true
 }
 
 export type LabelTemplateMinAggregateInputType = {
@@ -103,6 +110,7 @@ export type LabelTemplateMinAggregateInputType = {
   showContents?: true
   showQrCode?: true
   accentColor?: true
+  borderThickness?: true
   active?: true
   createdAt?: true
   updatedAt?: true
@@ -119,6 +127,7 @@ export type LabelTemplateMaxAggregateInputType = {
   showContents?: true
   showQrCode?: true
   accentColor?: true
+  borderThickness?: true
   active?: true
   createdAt?: true
   updatedAt?: true
@@ -135,6 +144,7 @@ export type LabelTemplateCountAggregateInputType = {
   showContents?: true
   showQrCode?: true
   accentColor?: true
+  borderThickness?: true
   active?: true
   createdAt?: true
   updatedAt?: true
@@ -238,6 +248,7 @@ export type LabelTemplateGroupByOutputType = {
   showContents: boolean
   showQrCode: boolean
   accentColor: string
+  borderThickness: number
   active: boolean
   createdAt: Date
   updatedAt: Date
@@ -277,6 +288,7 @@ export type LabelTemplateWhereInput = {
   showContents?: Prisma.BoolFilter<"LabelTemplate"> | boolean
   showQrCode?: Prisma.BoolFilter<"LabelTemplate"> | boolean
   accentColor?: Prisma.StringFilter<"LabelTemplate"> | string
+  borderThickness?: Prisma.IntFilter<"LabelTemplate"> | number
   active?: Prisma.BoolFilter<"LabelTemplate"> | boolean
   createdAt?: Prisma.DateTimeFilter<"LabelTemplate"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"LabelTemplate"> | Date | string
@@ -293,6 +305,7 @@ export type LabelTemplateOrderByWithRelationInput = {
   showContents?: Prisma.SortOrder
   showQrCode?: Prisma.SortOrder
   accentColor?: Prisma.SortOrder
+  borderThickness?: Prisma.SortOrder
   active?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -312,6 +325,7 @@ export type LabelTemplateWhereUniqueInput = Prisma.AtLeast<{
   showContents?: Prisma.BoolFilter<"LabelTemplate"> | boolean
   showQrCode?: Prisma.BoolFilter<"LabelTemplate"> | boolean
   accentColor?: Prisma.StringFilter<"LabelTemplate"> | string
+  borderThickness?: Prisma.IntFilter<"LabelTemplate"> | number
   active?: Prisma.BoolFilter<"LabelTemplate"> | boolean
   createdAt?: Prisma.DateTimeFilter<"LabelTemplate"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"LabelTemplate"> | Date | string
@@ -328,6 +342,7 @@ export type LabelTemplateOrderByWithAggregationInput = {
   showContents?: Prisma.SortOrder
   showQrCode?: Prisma.SortOrder
   accentColor?: Prisma.SortOrder
+  borderThickness?: Prisma.SortOrder
   active?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -352,6 +367,7 @@ export type LabelTemplateScalarWhereWithAggregatesInput = {
   showContents?: Prisma.BoolWithAggregatesFilter<"LabelTemplate"> | boolean
   showQrCode?: Prisma.BoolWithAggregatesFilter<"LabelTemplate"> | boolean
   accentColor?: Prisma.StringWithAggregatesFilter<"LabelTemplate"> | string
+  borderThickness?: Prisma.IntWithAggregatesFilter<"LabelTemplate"> | number
   active?: Prisma.BoolWithAggregatesFilter<"LabelTemplate"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"LabelTemplate"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"LabelTemplate"> | Date | string
@@ -367,6 +383,7 @@ export type LabelTemplateCreateInput = {
   showContents?: boolean
   showQrCode?: boolean
   accentColor?: string
+  borderThickness?: number
   active?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -383,6 +400,7 @@ export type LabelTemplateUncheckedCreateInput = {
   showContents?: boolean
   showQrCode?: boolean
   accentColor?: string
+  borderThickness?: number
   active?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -398,6 +416,7 @@ export type LabelTemplateUpdateInput = {
   showContents?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showQrCode?: Prisma.BoolFieldUpdateOperationsInput | boolean
   accentColor?: Prisma.StringFieldUpdateOperationsInput | string
+  borderThickness?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -414,6 +433,7 @@ export type LabelTemplateUncheckedUpdateInput = {
   showContents?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showQrCode?: Prisma.BoolFieldUpdateOperationsInput | boolean
   accentColor?: Prisma.StringFieldUpdateOperationsInput | string
+  borderThickness?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -430,6 +450,7 @@ export type LabelTemplateCreateManyInput = {
   showContents?: boolean
   showQrCode?: boolean
   accentColor?: string
+  borderThickness?: number
   active?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -445,6 +466,7 @@ export type LabelTemplateUpdateManyMutationInput = {
   showContents?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showQrCode?: Prisma.BoolFieldUpdateOperationsInput | boolean
   accentColor?: Prisma.StringFieldUpdateOperationsInput | string
+  borderThickness?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -461,6 +483,7 @@ export type LabelTemplateUncheckedUpdateManyInput = {
   showContents?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showQrCode?: Prisma.BoolFieldUpdateOperationsInput | boolean
   accentColor?: Prisma.StringFieldUpdateOperationsInput | string
+  borderThickness?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -477,6 +500,7 @@ export type LabelTemplateCountOrderByAggregateInput = {
   showContents?: Prisma.SortOrder
   showQrCode?: Prisma.SortOrder
   accentColor?: Prisma.SortOrder
+  borderThickness?: Prisma.SortOrder
   active?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -484,6 +508,7 @@ export type LabelTemplateCountOrderByAggregateInput = {
 
 export type LabelTemplateAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  borderThickness?: Prisma.SortOrder
 }
 
 export type LabelTemplateMaxOrderByAggregateInput = {
@@ -497,6 +522,7 @@ export type LabelTemplateMaxOrderByAggregateInput = {
   showContents?: Prisma.SortOrder
   showQrCode?: Prisma.SortOrder
   accentColor?: Prisma.SortOrder
+  borderThickness?: Prisma.SortOrder
   active?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -513,6 +539,7 @@ export type LabelTemplateMinOrderByAggregateInput = {
   showContents?: Prisma.SortOrder
   showQrCode?: Prisma.SortOrder
   accentColor?: Prisma.SortOrder
+  borderThickness?: Prisma.SortOrder
   active?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -520,6 +547,7 @@ export type LabelTemplateMinOrderByAggregateInput = {
 
 export type LabelTemplateSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  borderThickness?: Prisma.SortOrder
 }
 
 
@@ -535,6 +563,7 @@ export type LabelTemplateSelect<ExtArgs extends runtime.Types.Extensions.Interna
   showContents?: boolean
   showQrCode?: boolean
   accentColor?: boolean
+  borderThickness?: boolean
   active?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -551,6 +580,7 @@ export type LabelTemplateSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   showContents?: boolean
   showQrCode?: boolean
   accentColor?: boolean
+  borderThickness?: boolean
   active?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -567,6 +597,7 @@ export type LabelTemplateSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   showContents?: boolean
   showQrCode?: boolean
   accentColor?: boolean
+  borderThickness?: boolean
   active?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -583,12 +614,13 @@ export type LabelTemplateSelectScalar = {
   showContents?: boolean
   showQrCode?: boolean
   accentColor?: boolean
+  borderThickness?: boolean
   active?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type LabelTemplateOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "target" | "showTag" | "showSku" | "showManufacturerNumber" | "showLocation" | "showContents" | "showQrCode" | "accentColor" | "active" | "createdAt" | "updatedAt", ExtArgs["result"]["labelTemplate"]>
+export type LabelTemplateOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "target" | "showTag" | "showSku" | "showManufacturerNumber" | "showLocation" | "showContents" | "showQrCode" | "accentColor" | "borderThickness" | "active" | "createdAt" | "updatedAt", ExtArgs["result"]["labelTemplate"]>
 
 export type $LabelTemplatePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "LabelTemplate"
@@ -604,6 +636,7 @@ export type $LabelTemplatePayload<ExtArgs extends runtime.Types.Extensions.Inter
     showContents: boolean
     showQrCode: boolean
     accentColor: string
+    borderThickness: number
     active: boolean
     createdAt: Date
     updatedAt: Date
@@ -1040,6 +1073,7 @@ export interface LabelTemplateFieldRefs {
   readonly showContents: Prisma.FieldRef<"LabelTemplate", 'Boolean'>
   readonly showQrCode: Prisma.FieldRef<"LabelTemplate", 'Boolean'>
   readonly accentColor: Prisma.FieldRef<"LabelTemplate", 'String'>
+  readonly borderThickness: Prisma.FieldRef<"LabelTemplate", 'Int'>
   readonly active: Prisma.FieldRef<"LabelTemplate", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"LabelTemplate", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"LabelTemplate", 'DateTime'>

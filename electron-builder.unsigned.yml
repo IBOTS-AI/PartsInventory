@@ -1,0 +1,16 @@
+appId: com.ibots.inventory
+productName: IBOTS Inventory
+copyright: Copyright © 2026
+files:
+  - installer/**
+  - package.json
+win:
+  target: nsis
+  signAndEditExecutable: false
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: IBOTS Inventory
+  artifactName: ${productName}-Setup-${version}.${ext}

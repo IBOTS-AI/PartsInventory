@@ -58,3 +58,11 @@ Part images are stored on the local filesystem, not in SQLite. Set `IMAGE_UPLOAD
 absolute or working-directory-relative folder when deploying on the shop server. The default is
 `./uploads`. Users can upload JPEG/PNG/WebP files or import a public image URL; imported URLs are
 downloaded and stored locally.
+
+## Windows installer versioning
+
+- Update `version` in `package.json` before each release.
+- Build installer with: `npm run release:win`
+- If signing is not configured on the machine, use: `npm run release:win:unsigned`
+- Installer output is written under `dist/` with versioned filenames.
+

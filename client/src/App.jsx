@@ -50,6 +50,7 @@ import LocalOfferRoundedIcon from '@mui/icons-material/LocalOfferRounded';
 import ReportProblemRoundedIcon from '@mui/icons-material/ReportProblemRounded';
 import TvRoundedIcon from '@mui/icons-material/TvRounded';
 import AdminPanelSettingsRoundedIcon from '@mui/icons-material/AdminPanelSettingsRounded';
+import CategoryRoundedIcon from '@mui/icons-material/CategoryRounded';
 import './App.css';
 
 const movementOptions = [
@@ -78,6 +79,7 @@ function App() {
   const [operatorName, setOperatorName] = useState(() => localStorage.getItem('ibots-operator') || 'Shop kiosk');
   const [accentColor, setAccentColor] = useState(() => localStorage.getItem('ibots-accent') || '#1d5d70');
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [apiPort, setApiPort] = useState(() => localStorage.getItem('ibots-api-port') || '80');
   const [appMode, setAppMode] = useState(() => localStorage.getItem('ibots-mode') || 'admin');
   const [adminPasscode, setAdminPasscode] = useState(() => localStorage.getItem('ibots-admin-passcode') || '2370');
   const [adminPasscodeDialog, setAdminPasscodeDialog] = useState(false);
@@ -90,6 +92,11 @@ function App() {
   const [locationBrowserItems, setLocationBrowserItems] = useState([]);
   const [templates, setTemplates] = useState([]);
   const [suppliers, setSuppliers] = useState([]);
+  const [containers, setContainers] = useState([]);
+  const [containerManagerOpen, setContainerManagerOpen] = useState(false);
+  const [containerForm, setContainerForm] = useState(null);
+  const [containerFieldError, setContainerFieldError] = useState('');
+  const [containerDeleteTarget, setContainerDeleteTarget] = useState(null);
   const [selectedTemplateId, setSelectedTemplateId] = useState('');
   const [search, setSearch] = useState('');
   const [tagId, setTagId] = useState('all');
@@ -112,7 +119,7 @@ function App() {
   const [labelPart, setLabelPart] = useState(null);
   const [labelLocation, setLabelLocation] = useState(null);
   const [templateEditorOpen, setTemplateEditorOpen] = useState(false);
-  const [templateForm, setTemplateForm] = useState({ name: '', target: 'both', showTag: true, showSku: true, showManufacturerNumber: true, showLocation: true, showContents: true, showQrCode: true, accentColor: '#1d5d70' });
+  const [templateForm, setTemplateForm] = useState({ name: '', target: 'both', showTag: true, showSku: true, showManufacturerNumber: true, showLocation: true, showContents: true, showQrCode: true, accentColor: '#1d5d70', borderThickness: 22 });
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [locationLoading, setLocationLoading] = useState(false);
   const [editLocationDialog, setEditLocationDialog] = useState(false);
@@ -178,6 +185,7 @@ function App() {
       return;
     }
     localStorage.setItem('ibots-admin-passcode', adminPasscode);
+    localStorage.setItem('ibots-api-port', apiPort || '80');
     setSettingsOpen(false);
     setNotice('Settings saved');
   };
@@ -260,18 +268,20 @@ function App() {
     setLoading(true);
     setError('');
     try {
-      const [partData, tagData, locationData, templateData, supplierData] = await Promise.all([
+      const [partData, tagData, locationData, templateData, supplierData, containerData] = await Promise.all([
         getJson(`/api/parts?${new URLSearchParams({ ...(search ? { search } : {}), ...(includeInactive ? { includeInactive: 'true' } : {}), ...(supplierId !== 'all' ? { supplierId } : {}) })}`),
         getJson('/api/tags'),
         getJson('/api/locations'),
         getJson('/api/label-templates'),
         getJson('/api/suppliers'),
+        getJson('/api/containers'),
       ]);
       setParts(partData);
       setTags(tagData);
       setLocations(locationData);
       setTemplates(templateData);
       setSuppliers(supplierData);
+      setContainers(containerData);
       setSelectedTemplateId((current) => current || String(templateData[0]?.id || ''));
     } catch (loadError) {
       setError(loadError.message);
@@ -558,8 +568,12 @@ function App() {
     const tagColor = labelLocation?.color || labelPart?.homeLocation?.color || selectedTemplate?.accentColor || primaryTag?.color || '#1d5d70';
     context.fillStyle = '#ffffff';
     context.fillRect(0, 0, 1200, 600);
+    const borderThickness = Math.max(4, Math.min(80, Number(selectedTemplate?.borderThickness) || 22));
     context.fillStyle = tagColor;
-    context.fillRect(0, 0, 42, 600);
+    context.fillRect(0, 0, 1200, borderThickness);
+    context.fillRect(0, 600 - borderThickness, 1200, borderThickness);
+    context.fillRect(0, 0, borderThickness, 600);
+    context.fillRect(1200 - borderThickness, 0, borderThickness, 600);
     context.fillStyle = '#18242c';
     const title = labelPart?.name || labelLocation.name;
     let titleSize = 58;
@@ -599,9 +613,9 @@ function App() {
       thumbnail.crossOrigin = 'anonymous';
       thumbnail.onload = () => {
         const panelX = 660;
-        const panelY = 0;
-        const panelWidth = 540;
-        const panelHeight = 600;
+        const panelY = borderThickness;
+        const panelWidth = 540 - borderThickness;
+        const panelHeight = 600 - (borderThickness * 2);
         context.fillStyle = '#ffffff';
         context.fillRect(panelX, panelY, panelWidth, panelHeight);
         const scale = Math.max(panelWidth / thumbnail.naturalWidth, panelHeight / thumbnail.naturalHeight);
@@ -646,7 +660,7 @@ function App() {
   };
 
   const openTemplateEditor = () => {
-    setTemplateForm({ name: '', target: labelPart ? 'part' : 'location', showTag: selectedTemplate?.showTag ?? true, showSku: selectedTemplate?.showSku ?? true, showManufacturerNumber: selectedTemplate?.showManufacturerNumber ?? true, showLocation: selectedTemplate?.showLocation ?? true, showContents: selectedTemplate?.showContents ?? true, showQrCode: selectedTemplate?.showQrCode ?? true, accentColor: selectedTemplate?.accentColor || '#1d5d70' });
+    setTemplateForm({ name: '', target: labelPart ? 'part' : 'location', showTag: selectedTemplate?.showTag ?? true, showSku: selectedTemplate?.showSku ?? true, showManufacturerNumber: selectedTemplate?.showManufacturerNumber ?? true, showLocation: selectedTemplate?.showLocation ?? true, showContents: selectedTemplate?.showContents ?? true, showQrCode: selectedTemplate?.showQrCode ?? true, accentColor: selectedTemplate?.accentColor || '#1d5d70', borderThickness: selectedTemplate?.borderThickness || 22 });
     setTemplateEditorOpen(true);
   };
 
@@ -693,6 +707,61 @@ function App() {
   const openLocationEditor = (location) => {
     setEditLocationForm({ name: location.name, code: location.code, locationType: location.locationType, parentId: location.parentId || '', description: location.description || '', color: location.color || '#1d5d70' });
     setEditLocationDialog({ id: location.id });
+  };
+
+  const openContainerManager = async () => {
+    setContainerManagerOpen(true);
+    try {
+      setContainers(await getJson('/api/containers?includeInactive=true'));
+    } catch (loadError) {
+      setError(loadError.message);
+    }
+  };
+  const openContainerEditor = (container = null) => {
+    setContainerFieldError('');
+    setContainerForm(container ? { id: container.id, name: container.name } : { name: '' });
+  };
+  const saveContainer = async () => {
+    if (!containerForm?.name?.trim()) return;
+    setSaving(true);
+    try {
+      const containerId = Number(containerForm.id);
+      const isEditing = Number.isInteger(containerId) && containerId > 0;
+      const response = await fetch(isEditing ? `/api/containers/${containerId}` : '/api/containers', {
+        method: isEditing ? 'PUT' : 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: containerForm.name, active: true }),
+      });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error || 'Unable to save container');
+      setContainerForm(null);
+      setContainerFieldError('');
+      await loadInventory();
+    } catch (containerError) {
+      if (containerError?.message?.toLowerCase().includes('already exists')) {
+        setContainerFieldError(containerError.message);
+      } else {
+        setError(containerError.message);
+      }
+    } finally {
+      setSaving(false);
+    }
+  };
+  const removeContainer = async () => {
+    if (!containerDeleteTarget?.id) return;
+    setSaving(true);
+    try {
+      const response = await fetch(`/api/containers/${containerDeleteTarget.id}`, { method: 'DELETE' });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error || 'Unable to delete container');
+      setContainerDeleteTarget(null);
+      await loadInventory();
+      if (containerManagerOpen) setContainers(await getJson('/api/containers?includeInactive=true'));
+    } catch (containerError) {
+      setError(containerError.message);
+    } finally {
+      setSaving(false);
+    }
   };
 
   const saveLocation = async () => {
@@ -983,6 +1052,7 @@ function App() {
           </Box>
           <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
             <Chip className="network-chip" label="LOCAL NETWORK" size="small" />
+            <Typography variant="caption" sx={{ color: 'inherit', opacity: 0.8 }}>v{__APP_VERSION__}</Typography>
             <IconButton aria-label="Open navigation menu" onClick={(event) => setNavMenuAnchor(event.currentTarget)} color="inherit">
               <MenuRoundedIcon />
             </IconButton>
@@ -996,6 +1066,7 @@ function App() {
           <MenuItem key="needs-ordering" onClick={() => { setNavMenuAnchor(null); openLowStockReport(); }}><ReportProblemRoundedIcon fontSize="small" />Needs ordering</MenuItem>,
           <MenuItem key="history" onClick={() => { setNavMenuAnchor(null); openHistory(); }}><HistoryRoundedIcon fontSize="small" />History</MenuItem>,
           <MenuItem key="locations" onClick={() => { setNavMenuAnchor(null); openLocationBrowser(); }}><LocationCityRoundedIcon fontSize="small" />Locations</MenuItem>,
+          <MenuItem key="containers" onClick={() => { setNavMenuAnchor(null); openContainerManager(); }}><CategoryRoundedIcon fontSize="small" />Containers</MenuItem>,
           <MenuItem key="settings" onClick={() => { setNavMenuAnchor(null); openSettings(); }}><SettingsRoundedIcon fontSize="small" />Settings</MenuItem>,
           <MenuItem key="kiosk" onClick={() => { setNavMenuAnchor(null); enterKioskMode(); }}><TvRoundedIcon fontSize="small" />Kiosk mode</MenuItem>,
         ] : (
@@ -1576,12 +1647,57 @@ function App() {
         <DialogContent>
           {editLocationForm && <Stack spacing={2} sx={{ pt: 1 }}>
             <TextField required label="Name" value={editLocationForm.name} onChange={(event) => setEditLocationForm({ ...editLocationForm, name: event.target.value })} />
-            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}><TextField fullWidth required label="Code" value={editLocationForm.code} onChange={(event) => setEditLocationForm({ ...editLocationForm, code: event.target.value })} /><Select fullWidth value={editLocationForm.locationType} onChange={(event) => setEditLocationForm({ ...editLocationForm, locationType: event.target.value })}>{['shop', 'shelf', 'section', 'bin', 'other'].map((type) => <MenuItem key={type} value={type}>{type}</MenuItem>)}</Select><TextField fullWidth label="Color" type="color" value={editLocationForm.color} onChange={(event) => setEditLocationForm({ ...editLocationForm, color: event.target.value })} slotProps={{ htmlInput: { style: { height: 42 } } }} /></Stack>
+            <Stack className="edit-location-controls" direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+              <TextField fullWidth required label="Code" value={editLocationForm.code} onChange={(event) => setEditLocationForm({ ...editLocationForm, code: event.target.value })} />
+              <Box sx={{ width: '100%' }}>
+                <Select fullWidth value={editLocationForm.locationType} onChange={(event) => setEditLocationForm({ ...editLocationForm, locationType: event.target.value })}>{containers.map((container) => <MenuItem key={container.id} value={container.name}>{container.name}</MenuItem>)}</Select>
+                <Button size="small" variant="text" onClick={openContainerManager} sx={{ mt: 0.5, px: 0, textTransform: 'none' }}>Manage containers</Button>
+              </Box>
+              <TextField fullWidth className="edit-location-color" label="Color" type="color" value={editLocationForm.color} onChange={(event) => setEditLocationForm({ ...editLocationForm, color: event.target.value })} slotProps={{ htmlInput: { style: { height: 42 } } }} />
+            </Stack>
             <Select value={editLocationForm.parentId} onChange={(event) => setEditLocationForm({ ...editLocationForm, parentId: event.target.value })} displayEmpty><MenuItem value="">No parent (top-level)</MenuItem>{locations.filter((location) => location.id !== editLocationDialog.id).map((location) => <MenuItem key={location.id} value={location.id}>{location.name} ({location.code})</MenuItem>)}</Select>
             <TextField multiline minRows={2} label="Description" value={editLocationForm.description} onChange={(event) => setEditLocationForm({ ...editLocationForm, description: event.target.value })} />
           </Stack>}
         </DialogContent>
         <DialogActions><Button onClick={() => setEditLocationDialog(false)} disabled={saving}>Cancel</Button><Button variant="contained" onClick={saveLocation} disabled={saving || !editLocationForm?.name.trim() || !editLocationForm?.code.trim()}>{saving ? 'Saving...' : 'Save location'}</Button></DialogActions>
+      </Dialog>
+      <Dialog fullWidth maxWidth="xs" open={containerManagerOpen} onClose={() => !saving && setContainerManagerOpen(false)}>
+        <DialogTitle>Containers</DialogTitle>
+        <DialogContent>
+          <Stack spacing={1.5} sx={{ pt: 1 }}>
+            <Stack direction="row" sx={{ justifyContent: 'space-between', alignItems: 'center' }}>
+              <Typography color="text.secondary">Manage location container types.</Typography>
+              <Button size="small" variant="contained" onClick={() => openContainerEditor()}>New container</Button>
+            </Stack>
+            {containers.length ? containers.map((container) => (
+              <Stack key={container.id} direction="row" sx={{ justifyContent: 'space-between', alignItems: 'center' }}>
+                <Typography>{container.name}{container.active === false ? ' (inactive)' : ''}</Typography>
+                <Stack direction="row" spacing={1}>
+                  <Button size="small" onClick={() => openContainerEditor(container)}>Edit</Button>
+                  <Button size="small" color="error" onClick={() => setContainerDeleteTarget(container)}>Delete</Button>
+                </Stack>
+              </Stack>
+            )) : <Typography color="text.secondary">No containers yet.</Typography>}
+          </Stack>
+        </DialogContent>
+        <DialogActions><Button onClick={() => setContainerManagerOpen(false)}>Close</Button></DialogActions>
+      </Dialog>
+      <Dialog fullWidth maxWidth="xs" open={Boolean(containerForm)} onClose={() => !saving && setContainerForm(null)}>
+        <DialogTitle>{containerForm?.id ? 'Edit container' : 'Add container'}</DialogTitle>
+        <DialogContent>
+          <TextField autoFocus fullWidth label="Container name" value={containerForm?.name || ''} onChange={(event) => { setContainerForm((current) => ({ ...(current || {}), name: event.target.value })); if (containerFieldError) setContainerFieldError(''); }} error={Boolean(containerFieldError)} helperText={containerFieldError || ''} sx={{ mt: 1 }} />
+        </DialogContent>
+        <DialogActions><Button onClick={() => setContainerForm(null)} disabled={saving}>Cancel</Button><Button variant="contained" onClick={saveContainer} disabled={saving || !containerForm?.name?.trim()}>{saving ? 'Saving...' : 'Save container'}</Button></DialogActions>
+      </Dialog>
+      <Dialog fullWidth maxWidth="xs" open={Boolean(containerDeleteTarget)} onClose={() => !saving && setContainerDeleteTarget(null)}>
+        <DialogTitle>Delete container?</DialogTitle>
+        <DialogContent>
+          <Stack spacing={1.5} sx={{ pt: 1 }}>
+            <Typography>Delete <strong>{containerDeleteTarget?.name}</strong>?</Typography>
+            <Alert severity="warning">Locations using this container will be reassigned to "other".</Alert>
+          </Stack>
+        </DialogContent>
+        <DialogActions><Button onClick={() => setContainerDeleteTarget(null)} disabled={saving}>Cancel</Button><Button color="error" variant="contained" onClick={removeContainer} disabled={saving}>{saving ? 'Deleting...' : 'Delete container'}</Button></DialogActions>
       </Dialog>
       <Dialog fullWidth maxWidth="md" open={Boolean(report)} onClose={() => setReport(null)}>
         <DialogTitle>Needs ordering</DialogTitle>
@@ -1643,6 +1759,7 @@ function App() {
           <Stack spacing={2} sx={{ pt: 1 }}>
             <TextField required label="Template name" value={templateForm.name} onChange={(event) => setTemplateForm({ ...templateForm, name: event.target.value })} />
             <TextField label="Accent color" type="color" value={templateForm.accentColor} onChange={(event) => setTemplateForm({ ...templateForm, accentColor: event.target.value })} slotProps={{ htmlInput: { style: { height: 42 } } }} />
+            <TextField label="Border thickness (px)" type="number" value={templateForm.borderThickness} onChange={(event) => setTemplateForm({ ...templateForm, borderThickness: Number(event.target.value) || 22 })} helperText="Controls all four label border sides." />
             <Typography className="detail-label">Show on label</Typography>
             <Stack direction="row" useFlexGap sx={{ flexWrap: 'wrap' }}>
               {[['showTag', 'Tags'], ['showSku', 'SKU / code'], ['showManufacturerNumber', 'Manufacturer number'], ['showLocation', 'Location'], ['showContents', 'Contents'], ['showQrCode', 'QR code']].map(([key, label]) => <FormControlLabel key={key} control={<Checkbox checked={templateForm[key]} onChange={(event) => setTemplateForm({ ...templateForm, [key]: event.target.checked })} />} label={label} />)}
@@ -1692,8 +1809,9 @@ function App() {
               <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
                 <TextField fullWidth label="Code" required value={createForm.code} onChange={(event) => setCreateForm({ ...createForm, code: event.target.value })} />
                 <Select fullWidth value={createForm.locationType} onChange={(event) => setCreateForm({ ...createForm, locationType: event.target.value })}>
-                  {['shop', 'shelf', 'section', 'bin', 'other'].map((type) => <MenuItem key={type} value={type}>{type}</MenuItem>)}
+                  {containers.map((container) => <MenuItem key={container.id} value={container.name}>{container.name}</MenuItem>)}
                 </Select>
+                <Button size="small" onClick={openContainerManager}>Manage containers</Button>
                 <TextField fullWidth className="location-color-input" label="Color" type="color" value={createForm.locationColor} onChange={(event) => setCreateForm({ ...createForm, locationColor: event.target.value })} slotProps={{ htmlInput: { style: { height: 75 } } }} />
               </Stack>
               <Select value={createForm.parentId} onChange={(event) => setCreateForm({ ...createForm, parentId: event.target.value })} displayEmpty>
@@ -1756,6 +1874,8 @@ function App() {
             <TextField label="Primary accent color" type="color" value={accentColor} onChange={(event) => setAccentColor(event.target.value)} slotProps={{ htmlInput: { style: { height: 42 } } }} />
             <TextField label="Shop name" value={shopName} onChange={(event) => setShopName(event.target.value)} />
             <TextField label="Default operator name" value={operatorName} onChange={(event) => setOperatorName(event.target.value)} />
+            <TextField label="API port" type="number" value={apiPort} onChange={(event) => setApiPort(event.target.value.replace(/\D/g, '').slice(0, 5))} helperText="Default is 80. Server restart may be required after changing ports." />
+            {configuration?.serverPort && String(configuration.serverPort) !== String(apiPort) && <Alert severity="warning">Saved port differs from the running server port. Restart the server to apply the new port.</Alert>}
             <TextField label="Admin passcode" type="password" inputProps={{ inputMode: 'numeric', maxLength: 4, pattern: '[0-9]{4}' }} value={adminPasscode} onChange={(event) => setAdminPasscode(event.target.value.replace(/\D/g, '').slice(0, 4))} helperText="Use exactly four digits to unlock admin mode." />
             <Button component="label" variant="outlined">{logo ? 'Replace logo' : 'Choose logo image'}<input hidden type="file" accept="image/png,image/jpeg,image/webp" onChange={handleLogo} /></Button>
             {logo && <Box className="settings-logo-preview"><img src={logo} alt="Logo preview" /></Box>}
@@ -1770,6 +1890,9 @@ function App() {
             </Stack>
             <Typography className="detail-label">Image storage</Typography>
             <Typography variant="body2">{configuration?.imageUploadDir || 'Loading...'}</Typography>
+            <Divider />
+            <Typography className="detail-label">App version</Typography>
+            <Typography variant="body2">{__APP_VERSION__}</Typography>
           </Stack>
         </DialogContent>
         <DialogActions><Button onClick={() => setSettingsOpen(false)}>Cancel</Button><Button variant="contained" onClick={saveSettings}>Save settings</Button></DialogActions>

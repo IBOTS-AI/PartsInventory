@@ -9,7 +9,7 @@ import { inventoryMutationsRouter } from './routes/inventory-mutations.js';
 import { partImagesRouter } from './routes/part-images.js';
 
 const app = express();
-const port = process.env.PORT ? Number(process.env.PORT) : 4000;
+const port = process.env.PORT ? Number(process.env.PORT) : 80;
 
 app.use(cors());
 app.use(express.json());

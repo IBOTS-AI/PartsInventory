@@ -75,6 +75,7 @@ inventoryRouter.get('/configuration', async (_req, res, next) => {
     res.json({
       database,
       imageUploadDir: process.env.IMAGE_UPLOAD_DIR || './uploads',
+      serverPort: Number(process.env.PORT) || 80,
     });
   } catch (error) {
     next(error);
@@ -137,6 +138,80 @@ inventoryRouter.get('/suppliers', async (req, res, next) => {
       where: req.query.includeInactive === 'true' ? undefined : { active: true },
       orderBy: { name: 'asc' },
     }));
+  } catch (error) {
+    next(error);
+  }
+});
+
+inventoryRouter.get('/containers', async (req, res, next) => {
+  try {
+    res.json(await prisma.container.findMany({
+      where: req.query.includeInactive === 'true' ? undefined : { active: true },
+      orderBy: { name: 'asc' },
+    }));
+  } catch (error) {
+    next(error);
+  }
+});
+
+inventoryRouter.post('/containers', async (req, res, next) => {
+  try {
+    const name = typeof req.body?.name === 'string' ? req.body.name.trim() : '';
+    if (!name) {
+      res.status(400).json({ error: 'container name is required' });
+      return;
+    }
+    const existing = await prisma.container.findFirst({ where: { name: { equals: name } } });
+    if (existing) {
+      res.status(409).json({ error: `A container named "${name}" already exists` });
+      return;
+    }
+    res.status(201).json(await prisma.container.create({ data: { name } }));
+  } catch (error) {
+    next(error);
+  }
+});
+
+inventoryRouter.put('/containers/:id', async (req, res, next) => {
+  try {
+    const id = Number(req.params.id);
+    const name = typeof req.body?.name === 'string' ? req.body.name.trim() : '';
+    if (!Number.isInteger(id) || id <= 0 || !name) {
+      res.status(400).json({ error: 'container id and name are required' });
+      return;
+    }
+    const existing = await prisma.container.findFirst({ where: { name: { equals: name }, NOT: { id } } });
+    if (existing) {
+      res.status(409).json({ error: `A container named "${name}" already exists` });
+      return;
+    }
+    res.json(await prisma.container.update({ where: { id }, data: { name, active: req.body?.active !== false } }));
+  } catch (error) {
+    next(error);
+  }
+});
+
+inventoryRouter.delete('/containers/:id', async (req, res, next) => {
+  try {
+    const id = Number(req.params.id);
+    if (!Number.isInteger(id) || id <= 0) {
+      res.status(400).json({ error: 'valid container id is required' });
+      return;
+    }
+    const container = await prisma.container.findUnique({ where: { id } });
+    if (!container) {
+      res.status(404).json({ error: 'container not found' });
+      return;
+    }
+    const result = await prisma.$transaction(async (tx) => {
+      const updated = await tx.location.updateMany({
+        where: { locationType: container.name },
+        data: { locationType: 'other' },
+      });
+      await tx.container.delete({ where: { id } });
+      return { updatedLocations: updated.count };
+    });
+    res.json({ deleted: true, ...result });
   } catch (error) {
     next(error);
   }
@@ -351,6 +426,7 @@ inventoryRouter.post('/label-templates', async (req, res, next) => {
         showContents: body.showContents !== false,
         showQrCode: body.showQrCode !== false,
         accentColor: typeof body.accentColor === 'string' ? body.accentColor : '#1d5d70',
+        borderThickness: Number.isInteger(Number(body.borderThickness)) ? Math.max(4, Math.min(80, Number(body.borderThickness))) : 22,
       },
     });
     res.status(201).json(template);

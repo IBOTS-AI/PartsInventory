@@ -28,6 +28,11 @@ export type Tag = Prisma.TagModel
  */
 export type Location = Prisma.LocationModel
 /**
+ * Model Container
+ * 
+ */
+export type Container = Prisma.ContainerModel
+/**
  * Model Part
  * 
  */

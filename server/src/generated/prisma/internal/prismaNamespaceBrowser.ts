@@ -53,6 +53,7 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   Tag: 'Tag',
   Location: 'Location',
+  Container: 'Container',
   Part: 'Part',
   PartTag: 'PartTag',
   Inventory: 'Inventory',
@@ -104,6 +105,17 @@ export const LocationScalarFieldEnum = {
 } as const
 
 export type LocationScalarFieldEnum = (typeof LocationScalarFieldEnum)[keyof typeof LocationScalarFieldEnum]
+
+
+export const ContainerScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  active: 'active',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ContainerScalarFieldEnum = (typeof ContainerScalarFieldEnum)[keyof typeof ContainerScalarFieldEnum]
 
 
 export const PartScalarFieldEnum = {
@@ -230,6 +242,7 @@ export const LabelTemplateScalarFieldEnum = {
   showContents: 'showContents',
   showQrCode: 'showQrCode',
   accentColor: 'accentColor',
+  borderThickness: 'borderThickness',
   active: 'active',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

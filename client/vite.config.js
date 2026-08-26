@@ -4,7 +4,12 @@ import react from '@vitejs/plugin-react';
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
+  define: {
+    __APP_VERSION__: JSON.stringify(process.env.npm_package_version || '1.0.0'),
+  },
   server: {
+    port: 80,
+    strictPort: true,
     proxy: {
       '/api': 'http://localhost:4000',
       '/uploads': 'http://localhost:4000',
