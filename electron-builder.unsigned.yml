@@ -1,9 +1,11 @@
 appId: com.ibots.inventory
 productName: IBOTS Inventory
 copyright: Copyright © 2026
+asar: false
 files:
   - installer/**
   - package.json
+  - server/package.json
   - server/dist/**
   - client/dist/**
   - prisma/ibots.db

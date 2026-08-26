@@ -11,7 +11,7 @@ import { inventoryMutationsRouter } from './routes/inventory-mutations.js';
 import { partImagesRouter } from './routes/part-images.js';
 
 const app = express();
-const initialPort = process.env.PORT ? Number(process.env.PORT) : 80;
+const initialPort = process.env.PORT ? Number(process.env.PORT) : 4000;
 const uploadBaseDir = path.resolve(process.env.IMAGE_UPLOAD_DIR || path.resolve(process.cwd(), 'uploads'));
 
 app.use(cors());
@@ -52,7 +52,7 @@ app.use(errorHandler);
 function listenOnPort(portToTry: number) {
   const server = app.listen(portToTry, () => {
     const address = server.address();
-    const activePort = typeof address === 'object' && address ? address.port : portToTry;
+    const activePort = typeof address === 'object' && address && typeof address === 'object' ? address.port : portToTry;
     console.log(`IBOTS Inventory API listening on port ${activePort}`);
     if (typeof process.send === 'function') {
       process.send({ type: 'SERVER_STARTED', port: activePort });
@@ -60,11 +60,11 @@ function listenOnPort(portToTry: number) {
   });
 
   server.on('error', (err: any) => {
-    if ((err.code === 'EADDRINUSE' || err.code === 'EACCES') && portToTry !== 4000) {
-      console.warn(`Port ${portToTry} unavailable (${err.code}). Trying fallback port 4000...`);
-      listenOnPort(4000);
-    } else if ((err.code === 'EADDRINUSE' || err.code === 'EACCES') && portToTry === 4000) {
-      console.warn(`Port 4000 unavailable (${err.code}). Trying dynamic port 0...`);
+    if ((err.code === 'EADDRINUSE' || err.code === 'EACCES') && portToTry !== 80) {
+      console.warn(`Port ${portToTry} unavailable (${err.code}). Trying fallback port 80...`);
+      listenOnPort(80);
+    } else if ((err.code === 'EADDRINUSE' || err.code === 'EACCES') && portToTry === 80) {
+      console.warn(`Port 80 unavailable (${err.code}). Trying dynamic port 0...`);
       listenOnPort(0);
     } else {
       console.error('Server failed to start:', err);

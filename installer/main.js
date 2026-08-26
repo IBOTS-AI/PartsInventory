@@ -39,7 +39,7 @@ function prepareUserData() {
 }
 
 function startBackendServer(userData) {
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     const serverScriptCandidates = [
       path.join(app.getAppPath(), 'server', 'dist', 'index.js'),
       path.join(__dirname, '..', 'server', 'dist', 'index.js'),
@@ -49,8 +49,9 @@ function startBackendServer(userData) {
     const serverScript = serverScriptCandidates.find((p) => fs.existsSync(p));
 
     if (!serverScript) {
-      console.error('Could not find server script at candidates:', serverScriptCandidates);
-      resolve(80);
+      const errMsg = `Could not find server script. Searched:\n${serverScriptCandidates.join('\n')}`;
+      console.error(errMsg);
+      reject(new Error(errMsg));
       return;
     }
 
@@ -59,13 +60,26 @@ function startBackendServer(userData) {
     const formattedDbUrl = `file:${userData.dbPath.replace(/\\/g, '/')}`;
 
     serverProcess = utilityProcess.fork(serverScript, [], {
+      stdio: 'pipe',
       env: {
         ...process.env,
-        PORT: '80',
+        PORT: '4000',
         DATABASE_URL: formattedDbUrl,
         IMAGE_UPLOAD_DIR: userData.uploadsDir,
       },
     });
+
+    if (serverProcess.stdout) {
+      serverProcess.stdout.on('data', (data) => {
+        console.log(`[Server STDOUT] ${data.toString()}`);
+      });
+    }
+
+    if (serverProcess.stderr) {
+      serverProcess.stderr.on('data', (data) => {
+        console.error(`[Server STDERR] ${data.toString()}`);
+      });
+    }
 
     let resolved = false;
 
@@ -81,34 +95,44 @@ function startBackendServer(userData) {
 
     serverProcess.on('exit', (code) => {
       console.warn(`Server process exited with code ${code}`);
+      if (!resolved) {
+        resolved = true;
+        reject(new Error(`Server process exited unexpectedly with code ${code}`));
+      }
     });
 
     setTimeout(() => {
       if (!resolved) {
         resolved = true;
-        resolve(80);
+        console.warn('Server startup timeout reached, attempting fallback to port 4000');
+        resolve(4000);
       }
-    }, 3000);
+    }, 10000);
   });
 }
 
 async function createWindow() {
-  const userData = prepareUserData();
-  const activePort = await startBackendServer(userData);
+  try {
+    const userData = prepareUserData();
+    const activePort = await startBackendServer(userData);
 
-  mainWindow = new BrowserWindow({
-    width: 1440,
-    height: 900,
-    title: 'IBOTS Inventory',
-    webPreferences: {
-      contextIsolation: true,
-      nodeIntegration: false,
-    },
-  });
+    mainWindow = new BrowserWindow({
+      width: 1440,
+      height: 900,
+      title: 'IBOTS Inventory',
+      webPreferences: {
+        contextIsolation: true,
+        nodeIntegration: false,
+      },
+    });
 
-  const appUrl = `http://localhost:${activePort}`;
-  console.log(`Loading application window at ${appUrl}...`);
-  mainWindow.loadURL(appUrl);
+    const appUrl = `http://localhost:${activePort}`;
+    console.log(`Loading application window at ${appUrl}...`);
+    mainWindow.loadURL(appUrl);
+  } catch (err) {
+    console.error('Failed to launch application window:', err);
+    dialog.showErrorBox('IBOTS Inventory Launch Error', err.message || String(err));
+  }
 }
 
 app.whenReady().then(createWindow);
